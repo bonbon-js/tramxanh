@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Trạm Xanh là landing page về ô nhiễm đất, nước và không khí với giao diện giàu hiệu ứng và dẫn chứng rõ ràng.">
+    <title>TRẠM XANH | Hành Động Từ Dữ Liệu</title>
+    <script>document.documentElement.classList.add('js');</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Bodoni+Moda:opsz,wght@6..96,600;6..96,700;6..96,800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            --bg: #eef8f5;
+            --bg2: #dff1eb;
+            --panel: rgba(255, 255, 255, 0.82);
+            --line: rgba(51, 98, 86, 0.12);
+            --line2: rgba(51, 98, 86, 0.24);
+            --text: #17352d;
+            --muted: #58756d;
+            --green: #2aa36b;
+            --blue: #3ab6b3;
+            --gold: #f1b65f;
+            --danger: #da6e6e;
+            --shadow: 0 28px 70px rgba(35,75,66,.12);
+            --ease: cubic-bezier(.22,1,.36,1);
+            --max: 1180px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 12% 14%, rgba(58,182,179,.16), transparent 24%),
+                radial-gradient(circle at 84% 12%, rgba(42,163,107,.12), transparent 28%),
+                linear-gradient(180deg, #f6fcf9 0%, #edf8f4 45%, #e8f4ef 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle, rgba(42,163,107,.08) 0 1px, transparent 1px),
+                radial-gradient(circle, rgba(58,182,179,.05) 0 1px, transparent 1px);
+            background-size: 22px 22px, 18px 18px;
+            background-position: 0 0, 11px 11px;
+            opacity: .08;
+            pointer-events: none;
+            z-index: 0;
+        }
+        a { color: inherit; text-decoration: none; }
+        button, input { font: inherit; }
+        section[id] { scroll-margin-top: 100px; }
+        .cursor, .progress { position: fixed; z-index: 1200; pointer-events: none; }
+        .cursor {
+            width: 26rem; height: 26rem; border-radius: 50%;
+            background: radial-gradient(circle, rgba(58,182,179,.12), rgba(42,163,107,.08) 36%, transparent 72%);
+            transform: translate(-50%, -50%);
+            filter: blur(14px);
+            mix-blend-mode: screen;
+            opacity: .65;
+        }
+        .progress {
+            top: 0; left: 0; height: 3px; width: 0;
+            background: linear-gradient(90deg, var(--green), var(--blue));
+            box-shadow: 0 0 20px rgba(58,182,179,.35);
+        }
+        .wrap { width: min(100% - 2rem, var(--max)); margin: 0 auto; position: relative; z-index: 1; }
+        .btn {
+            position: relative; display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+            padding: .95rem 1.35rem; min-height: 52px; border-radius: 999px; border: 1px solid transparent;
+            font-weight: 700; cursor: pointer; overflow: hidden;
+            transition: transform .35s var(--ease), box-shadow .35s ease, border-color .35s ease, background .35s ease;
+        }
+        .btn::before {
+            content: ""; position: absolute; inset: 0;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,.28), transparent);
+            transform: translateX(-125%); transition: transform .75s ease;
+        }
+        .btn:hover::before { transform: translateX(125%); }
+        .btn:hover { transform: translateY(-4px); }
+        .btn.primary { color: #f9fffc; background: linear-gradient(135deg, #24905f, var(--green) 52%, var(--blue)); box-shadow: 0 14px 36px rgba(58,182,179,.18); }
+        .btn.secondary { color: var(--text); background: rgba(255,255,255,.72); border-color: var(--line); }
+        .eyebrow { display: inline-flex; align-items: center; gap: .65rem; color: var(--green); font-size: .82rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+        .eyebrow::before { content: ""; width: 38px; height: 1px; background: linear-gradient(90deg, var(--green), transparent); }
+        h1, h2, .display { font-family: 'Bodoni Moda', serif; line-height: .94; letter-spacing: -.04em; }
+        .js [data-r] { opacity: 0; transform: translateY(28px); }
+        /* CSS_NAV */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1100;
+            padding: 1rem; transition: padding .35s ease;
+        }
+        header.scrolled { padding-top: .7rem; padding-bottom: .7rem; }
+        .navbox {
+            width: min(100%, 1240px); margin: 0 auto; padding: .8rem 1rem;
+            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+            border-radius: 999px; background: rgba(255,255,255,.66); backdrop-filter: blur(10px);
+            transition: background .35s ease, border-color .35s ease, box-shadow .35s ease;
+            border: 1px solid transparent;
+        }
+        header.scrolled .navbox, header.open .navbox {
+            background: rgba(255,255,255,.88); border-color: rgba(51,98,86,.12); box-shadow: 0 18px 44px rgba(35,75,66,.12);
+        }
+        .brand { display: inline-flex; align-items: center; gap: .65rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
+        .brand::before {
+            content: ""; width: 10px; height: 10px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--green), var(--blue)); box-shadow: 0 0 14px rgba(115,226,126,.45);
+        }
+        nav { position: relative; }
+        .menu {
+            display: flex; align-items: center; gap: .3rem; list-style: none;
+            padding: .35rem; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.5);
+        }
+        .menu a {
+            position: relative; display: inline-flex; align-items: center; justify-content: center;
+            padding: .8rem 1rem; border-radius: 999px; color: var(--muted); font-size: .92rem; font-weight: 600;
+            transition: color .3s ease, background .3s ease, transform .3s ease;
+        }
+        .menu a::after {
+            content: ""; position: absolute; left: 18px; right: 18px; bottom: 10px; height: 2px;
+            border-radius: 999px; background: linear-gradient(90deg, var(--green), var(--blue));
+            transform: scaleX(0); transition: transform .3s ease;
+        }
+        .menu a:hover, .menu a.active { color: var(--text); background: rgba(255,255,255,.88); transform: translateY(-1px); }
+        .menu a:hover::after, .menu a.active::after { transform: scaleX(1); }
+        .head-actions { display: flex; align-items: center; gap: .75rem; }
+        .burger {
+            display: none; width: 48px; height: 48px; place-items: center;
+            border: 1px solid var(--line); border-radius: 50%; background: rgba(255,255,255,.7); color: var(--text); cursor: pointer;
+            transition: transform .3s ease, border-color .3s ease, background .3s ease;
+        }
+        .burger:hover { transform: translateY(-2px); border-color: var(--line2); background: rgba(255,255,255,.08); }
+        /* CSS_HERO */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center; overflow: hidden;
+            padding: 8.8rem 0 4.5rem; position: relative;
+        }
+        .hero::before, .hero::after {
+            content: ""; position: absolute; border-radius: 50%; pointer-events: none; filter: blur(18px);
+        }
+        .hero::before { width: 20rem; height: 20rem; top: 5rem; left: -4rem; background: radial-gradient(circle, rgba(58,182,179,.16), transparent 72%); }
+        .hero::after { width: 26rem; height: 26rem; right: -8rem; bottom: -6rem; background: radial-gradient(circle, rgba(42,163,107,.14), transparent 72%); }
+        .hero-grid { display: grid; grid-template-columns: minmax(0,1.05fr) minmax(0,.95fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+        .hero h1 { font-size: clamp(3.6rem, 8vw, 7rem); max-width: 10ch; text-wrap: balance; }
+        .grad { background: linear-gradient(135deg, #bbf5aa, #67e6ff 50%, #ffe08d); -webkit-background-clip: text; color: transparent; }
+        .hero p.lead { margin-top: 1.5rem; max-width: 36rem; font-size: 1.05rem; color: var(--muted); }
+        .hero-actions { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 2rem; }
+        .metrics { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1rem; margin-top: 2.2rem; }
+        .metric {
+            padding: 1.15rem; border: 1px solid var(--line); border-radius: 22px; background: rgba(255,255,255,.78);
+            transition: transform .35s var(--ease), border-color .35s ease, box-shadow .35s ease;
+        }
+        .metric:hover { transform: translateY(-6px); border-color: var(--line2); box-shadow: 0 18px 38px rgba(0,0,0,.22); }
+        .metric strong { display: block; font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: -.05em; }
+        .metric span { display: block; margin-top: .35rem; color: var(--muted); font-size: .9rem; }
+        .stage {
+            min-height: 36rem; position: relative; padding: 1.7rem; overflow: hidden;
+            border-radius: 32px; border: 1px solid rgba(197,220,255,.16);
+            background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.78)), linear-gradient(155deg, rgba(238,248,245,.98), rgba(227,242,236,.86));
+            box-shadow: var(--shadow);
+        }
+        .stage::before, .stage::after {
+            content: ""; position: absolute; border-radius: 50%; z-index: 0;
+        }
+        .stage::before { width: 18rem; height: 18rem; top: -7rem; right: -5rem; background: radial-gradient(circle, rgba(42,163,107,.12), transparent 72%); }
+        .stage::after { width: 14rem; height: 14rem; left: -4rem; bottom: -5rem; background: radial-gradient(circle, rgba(58,182,179,.14), transparent 72%); }
+        .globe {
+            position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+            width: clamp(14rem, 34vw, 18rem); height: clamp(14rem, 34vw, 18rem); border-radius: 50%;
+            background: radial-gradient(circle at 38% 32%, rgba(255,255,255,.38), transparent 28%), radial-gradient(circle, rgba(103,184,164,.95) 0%, rgba(58,129,118,.72) 68%, transparent 69%);
+            box-shadow: inset 0 0 40px rgba(58,182,179,.12), 0 0 50px rgba(58,182,179,.16);
+            z-index: 1;
+        }
+        .globe::before, .globe::after {
+            content: ""; position: absolute; inset: -10%; border-radius: 50%; border: 1px solid rgba(197,220,255,.1); animation: spin 18s linear infinite;
+        }
+        .globe::after { inset: -18%; border-style: dashed; animation-duration: 26s; animation-direction: reverse; }
+        .core {
+            position: absolute; inset: 18%; border-radius: 50%; display: grid; place-items: center; text-align: center;
+            background: radial-gradient(circle, rgba(255,255,255,.72), rgba(231,244,239,.78)); border: 1px solid rgba(51,98,86,.12); padding: 1rem;
+        }
+        .core small, .core span { color: var(--muted); font-size: .82rem; letter-spacing: .16em; text-transform: uppercase; }
+        .core strong { display: block; margin: .35rem 0 .2rem; font-size: 1.6rem; letter-spacing: -.05em; }
+        .badge {
+            position: absolute; width: min(12.6rem, calc(50% - 1rem)); padding: 1rem 1.05rem; z-index: 2;
+            border-radius: 22px; border: 1px solid var(--line); background: rgba(255,255,255,.88); box-shadow: 0 18px 38px rgba(35,75,66,.12);
+            transition: transform .35s var(--ease), border-color .35s ease, box-shadow .35s ease; animation: float 6s ease-in-out infinite;
+        }
+        .badge:hover { transform: translateY(-8px) scale(1.02); border-color: var(--line2); box-shadow: 0 28px 48px rgba(0,0,0,.28); }
+        .badge:nth-of-type(3) { animation-delay: 1.2s; } .badge:nth-of-type(4) { animation-delay: 2.2s; }
+        .b1 { top: 10%; left: 2%; } .b2 { left: 7%; bottom: 14%; } .b3 { top: 22%; right: 2%; }
+        .badge em { font-style: normal; color: var(--green); font-weight: 700; font-size: .76rem; letter-spacing: .18em; text-transform: uppercase; }
+        .badge h3 { margin-top: .7rem; font-size: 1.08rem; line-height: 1.25; }
+        .badge p { margin-top: .45rem; color: var(--muted); font-size: .9rem; }
+        .note {
+            position: absolute; right: 1.2rem; bottom: 1.2rem; z-index: 2; max-width: 18rem;
+            display: flex; gap: .8rem; align-items: flex-start; padding: 1rem 1.1rem; border-radius: 20px; border: 1px solid var(--line); background: rgba(255,255,255,.82);
+        }
+        .dot {
+            width: .8rem; height: .8rem; margin-top: .28rem; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 0 rgba(115,226,126,.5);
+            animation: pulse 2s infinite; flex: none;
+        }
+        .note strong { display: block; margin-bottom: .2rem; font-size: .98rem; }
+        .note p { color: var(--muted); font-size: .87rem; }
+        /* CSS_SECTIONS */
+        main { position: relative; z-index: 2; }
+        section { position: relative; padding: clamp(5.3rem, 8vw, 8rem) 0; }
+        .intro { display: flex; align-items: end; justify-content: space-between; gap: 2rem; margin-bottom: 2.4rem; }
+        .intro h2 { font-size: clamp(2.7rem, 6vw, 4.8rem); max-width: 8ch; }
+        .intro p { max-width: 35rem; color: var(--muted); font-size: 1rem; }
+        .cards3, .proofs, .solutions { display: grid; gap: 1.25rem; }
+        .cards3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+        .proofs, .solutions { grid-template-columns: repeat(2, minmax(0,1fr)); }
+        .card, .proof, .side, .panel, .cta, .toast {
+            border: 1px solid var(--line);
+            backdrop-filter: blur(18px);
+        }
+        .card, .proof, .side, .panel {
+            border-radius: 28px;
+            background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.78)), linear-gradient(155deg, rgba(245,252,249,.98), rgba(229,242,237,.88));
+        }
+        .card {
+            position: relative; min-height: 22rem; padding: 1.55rem; overflow: hidden;
+            transition: transform .35s var(--ease), border-color .35s ease, box-shadow .35s ease;
+        }
+        .card::after {
+            content: ""; position: absolute; right: -2rem; bottom: -2rem; width: 10rem; height: 10rem; border-radius: 50%;
+            background: radial-gradient(circle, rgba(58,182,179,.16), transparent 72%); transition: transform .45s ease;
+        }
+        .card:hover { transform: translateY(-10px); border-color: var(--line2); box-shadow: var(--shadow); }
+        .card:hover::after { transform: scale(1.12); }
+        .icon {
+            width: 64px; height: 64px; display: grid; place-items: center; border-radius: 20px; font-size: 1.7rem;
+            color: var(--green); background: rgba(245,252,249,.95); border: 1px solid rgba(51,98,86,.08); transition: transform .35s ease, background .35s ease;
+        }
+        .card:hover .icon { transform: rotate(8deg) scale(1.08); background: rgba(42,163,107,.12); }
+        .card h3, .proof h3, .panel h3 { line-height: 1.1; }
+        .card h3 { margin-top: 1.3rem; font-size: 1.6rem; }
+        .card p, .proof p, .side p, .panel p, .mini span, .steps span { color: var(--muted); }
+        .tags { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.35rem; }
+        .tags span {
+            padding: .45rem .75rem; border-radius: 999px; font-size: .82rem;
+            border: 1px solid rgba(51,98,86,.12); background: rgba(255,255,255,.74); color: #315349;
+        }
+        .proofs { align-items: stretch; }
+        .proof, .side, .panel { padding: 1.55rem; box-shadow: 0 18px 44px rgba(0,0,0,.18); }
+        .proof { display: flex; flex-direction: column; gap: 1rem; transition: transform .35s var(--ease), border-color .35s ease, box-shadow .35s ease; }
+        .proof:hover { transform: translateY(-10px); border-color: var(--line2); box-shadow: var(--shadow); }
+        .phead { display: flex; justify-content: space-between; gap: 1rem; align-items: start; }
+        .ptype { display: inline-flex; align-items: center; gap: .5rem; padding: .5rem .75rem; border-radius: 999px; background: rgba(255,255,255,.05); color: var(--muted); font-size: .8rem; letter-spacing: .15em; text-transform: uppercase; }
+        .picon { width: 52px; height: 52px; display: grid; place-items: center; border-radius: 18px; background: rgba(255,255,255,.8); font-size: 1.4rem; color: var(--green); }
+        .proof-media {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            border-radius: 22px;
+            border: 1px solid rgba(51,98,86,.1);
+        }
+        .stat { font-size: clamp(3rem, 7vw, 4.8rem); line-height: .92; font-weight: 800; letter-spacing: -.07em; }
+        .mini { padding: .9rem 1rem; border-radius: 18px; border: 1px solid rgba(51,98,86,.1); background: rgba(255,255,255,.7); }
+        .mini strong { display: block; margin-bottom: .12rem; font-size: .96rem; }
+        .sources { margin-top: auto; display: flex; flex-wrap: wrap; gap: .75rem; }
+        .sources a {
+            display: inline-flex; align-items: center; gap: .45rem; padding: .75rem 1rem; border-radius: 999px;
+            border: 1px solid rgba(51,98,86,.12); background: rgba(255,255,255,.68); font-size: .9rem; transition: transform .3s ease, border-color .3s ease, background .3s ease;
+        }
+        .sources a:hover { transform: translateY(-4px); border-color: var(--line2); background: rgba(255,255,255,.08); }
+        .side { display: grid; gap: 1rem; }
+        .rows { display: grid; gap: .95rem; margin-top: .2rem; }
+        .row { display: grid; grid-template-columns: auto 1fr; gap: .9rem; align-items: center; }
+        .row .box { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 16px; background: rgba(255,255,255,.78); color: var(--green); font-size: 1.2rem; }
+        .row strong { display: block; font-size: 1.04rem; }
+        .quote { padding: 1rem 1.1rem; border-left: 3px solid var(--green); border-radius: 0 18px 18px 0; background: rgba(255,255,255,.72); color: var(--muted); }
+        .solutions { margin-top: .25rem; }
+        .stack, .steps, .dash { display: grid; gap: .95rem; margin-top: 1.35rem; }
+        .stack .item, .steps .item {
+            display: grid; gap: .95rem; align-items: center; padding: 1rem 1.1rem; border-radius: 22px; background: rgba(255,255,255,.72);
+            border: 1px solid rgba(51,98,86,.1); transition: transform .35s var(--ease), border-color .35s ease, background .35s ease;
+        }
+        .stack .item { grid-template-columns: auto 1fr auto; }
+        .steps .item { grid-template-columns: auto 1fr; }
+        .stack .item:hover, .steps .item:hover { transform: translateY(-6px); border-color: var(--line2); background: rgba(255,255,255,.92); }
+        .stack i { font-size: 1.45rem; color: var(--green); }
+        .stack .go { opacity: 0; transform: translateX(-6px); color: var(--green); transition: opacity .3s ease, transform .3s ease; }
+        .stack .item:hover .go { opacity: 1; transform: translateX(0); }
+        .dash { grid-template-columns: repeat(2, minmax(0,1fr)); }
+        .tile { padding: 1.15rem; border-radius: 22px; border: 1px solid rgba(51,98,86,.1); background: rgba(255,255,255,.72); transition: transform .35s ease, border-color .35s ease; }
+        .tile:hover { transform: translateY(-6px); border-color: var(--line2); }
+        .tile small { color: var(--muted); font-size: .85rem; letter-spacing: .16em; text-transform: uppercase; }
+        .tile strong { display: block; margin-top: .4rem; font-size: 2rem; letter-spacing: -.06em; }
+        .bar { width: 100%; height: 10px; margin-top: .7rem; border-radius: 999px; overflow: hidden; background: rgba(255,255,255,.08); }
+        .fill { width: var(--w,60%); height: 100%; transform-origin: left center; border-radius: inherit; background: linear-gradient(90deg, var(--green), var(--blue)); }
+        .steps .n {
+            width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%;
+            background: linear-gradient(135deg, var(--green), var(--blue)); color: #051018; font-weight: 800;
+        }
+        .cta {
+            position: relative; overflow: hidden; padding: clamp(2rem,5vw,3rem); border-radius: 34px;
+            color: #091420; background: radial-gradient(circle at 12% 18%, rgba(255,255,255,.65), transparent 28%), linear-gradient(135deg, #e9ffd5 0%, #c7f5ff 46%, #fff1c9 100%);
+            box-shadow: 0 32px 80px rgba(0,0,0,.24);
+        }
+        .cta::before {
+            content: ""; position: absolute; right: -4rem; top: -4rem; width: 16rem; height: 16rem; border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,.45), transparent 70%);
+        }
+        .ctagrid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 2rem; align-items: center; }
+        .cta h2 { font-size: clamp(2.8rem, 7vw, 4.8rem); max-width: 9ch; }
+        .cta p { margin-top: 1rem; max-width: 36rem; color: rgba(9,20,32,.72); }
+        form.mail { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: .75rem; margin-top: 1.5rem; padding: .65rem; border-radius: 999px; background: rgba(255,255,255,.66); border: 1px solid rgba(9,20,32,.12); box-shadow: 0 16px 30px rgba(12,23,35,.08); }
+        form.mail input { min-width: 0; border: 0; outline: none; background: transparent; padding: .9rem 1rem; color: #091420; }
+        form.mail input::placeholder { color: rgba(9,20,32,.54); }
+        .chips { display: grid; gap: .9rem; min-width: min(100%, 18rem); }
+        .chip { padding: 1rem 1.1rem; border-radius: 22px; border: 1px solid rgba(9,20,32,.12); background: rgba(255,255,255,.6); }
+        .chip small { display: block; color: rgba(9,20,32,.56); font-size: .75rem; letter-spacing: .16em; text-transform: uppercase; }
+        .chip strong { display: block; margin-top: .35rem; font-size: 1.5rem; letter-spacing: -.04em; }
+        .chip span { display: block; margin-top: .2rem; color: rgba(9,20,32,.68); font-size: .92rem; }
+        .foot { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 2rem 0 1rem; color: var(--muted); font-size: .92rem; }
+        .socials { display: flex; gap: .75rem; }
+        .socials a {
+            width: 46px; height: 46px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line); background: rgba(255,255,255,.04);
+            transition: transform .35s var(--ease), border-color .35s ease, background .35s ease, color .35s ease;
+        }
+        .socials a:hover { transform: translateY(-5px) rotate(8deg); border-color: var(--line2); background: rgba(255,255,255,.08); color: var(--green); }
+        .toast {
+            position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 1200; max-width: min(92vw,24rem);
+            display: flex; align-items: center; gap: .75rem; padding: 1rem 1.1rem; border-radius: 20px; background: rgba(255,255,255,.94); box-shadow: 0 18px 40px rgba(35,75,66,.16);
+            transform: translateY(140%); transition: transform .45s var(--ease);
+        }
+        .toast.show { transform: translateY(0); }
+        .toast i { color: var(--green); font-size: 1.3rem; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(115,226,126,.5); } 70% { box-shadow: 0 0 0 14px rgba(115,226,126,0); } 100% { box-shadow: 0 0 0 0 rgba(115,226,126,0); } }
+        /* CSS_RESP */
+        @media (max-width: 1100px) {
+            .hero-grid, .proofs, .solutions, .ctagrid { grid-template-columns: 1fr; }
+            .chips { grid-template-columns: repeat(3, minmax(0,1fr)); min-width: 0; }
+        }
+        @media (max-width: 900px) {
+            .burger { display: grid; }
+            .head-actions { display: none; }
+            .menu {
+                position: absolute; top: calc(100% + .8rem); right: 0; width: min(88vw, 19rem);
+                padding: .7rem; flex-direction: column; align-items: stretch; border-radius: 24px; background: rgba(8,17,28,.95);
+                opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-10px); transition: opacity .3s ease, transform .3s ease, visibility .3s ease;
+            }
+            header.open .menu { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); }
+            .menu a { justify-content: flex-start; }
+            .intro { flex-direction: column; align-items: flex-start; }
+            .cards3, .metrics, .dash, .chips { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 640px) {
+            header { padding-left: .75rem; padding-right: .75rem; }
+            .navbox { width: 100%; padding: .7rem .8rem; }
+            .hero { padding-top: 7.7rem; }
+            .hero h1 { font-size: clamp(3rem, 13vw, 4.2rem); }
+            .stage { min-height: 30rem; padding: 1.2rem; }
+            .badge { width: min(13rem, calc(100% - 2.4rem)); padding: .9rem; }
+            .b1 { top: 8%; left: 1.2rem; } .b2 { left: 1.2rem; bottom: 6.5rem; } .b3 { top: 17%; right: 1.2rem; }
+            .note { position: relative; right: auto; bottom: auto; margin-top: 15.5rem; max-width: none; }
+            form.mail { grid-template-columns: 1fr; border-radius: 28px; }
+            .foot { flex-direction: column; align-items: flex-start; }
+            .cursor { display: none; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+            .cursor { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor" id="cursor" aria-hidden="true"></div>
+    <div class="progress" id="progress" aria-hidden="true"></div>
+
+    <header id="topbar">
+        <div class="navbox">
+            <a class="brand" href="#hero">TRẠM XANH</a>
+            <nav aria-label="Điều hướng chính">
+                <ul class="menu" id="menu">
+                    <li><a class="active" href="#hero">Mở đầu</a></li>
+                    <li><a href="#issues">Cảnh báo</a></li>
+                    <li><a href="#evidence">Dẫn chứng</a></li>
+                    <li><a href="#solutions">Giải pháp</a></li>
+                    <li><a href="#cta">Tham gia</a></li>
+                </ul>
+            </nav>
+            <div class="head-actions">
+                <a class="btn secondary magnetic" href="#evidence"><i class="ph-bold ph-chart-bar"></i>Xem số liệu</a>
+                <a class="btn primary magnetic" href="#cta"><i class="ph-bold ph-arrow-up-right"></i>Hành động ngay</a>
+            </div>
+            <button class="burger" id="burger" aria-label="Mở menu" aria-expanded="false" aria-controls="menu"><i class="ph-bold ph-list"></i></button>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" id="hero">
+            <div class="wrap hero-grid">
+                <div>
+                    <span class="eyebrow">Hành trình tái sinh môi trường</span>
+                    <h1>Biến cảnh báo thành <span class="grad">chuyển động xanh</span></h1>
+                    <p class="lead">
+                        Trạm Xanh kể câu chuyện về ô nhiễm đất, nước và không khí bằng giao diện giàu hiệu ứng, nhiều hover state rõ ràng và các dẫn chứng đủ mạnh để người xem dừng lại, đọc và hành động.
+                    </p>
+                    <div class="hero-actions">
+                        <a class="btn primary magnetic" href="#solutions"><i class="ph-bold ph-leaf"></i>Khám phá giải pháp</a>
+                        <a class="btn secondary magnetic" href="#issues"><i class="ph-bold ph-arrow-down"></i>Xem ba điểm nóng</a>
+                    </div>
+                    <div class="metrics">
+                        <article class="metric tilt">
+                            <strong class="count" data-to="800" data-suf="M">0</strong>
+                            <span>trẻ em có nồng độ chì trong máu ở mức cần can thiệp</span>
+                        </article>
+                        <article class="metric tilt">
+                            <strong class="count" data-to="2.1" data-dec="1" data-suf="B">0</strong>
+                            <span>người chưa có nước uống được quản lý an toàn</span>
+                        </article>
+                        <article class="metric tilt">
+                            <strong class="count" data-to="99" data-suf="%">0</strong>
+                            <span>dân số thế giới hít thở không khí vượt chuẩn WHO</span>
+                        </article>
+                    </div>
+                </div>
+
+                <div class="stage tilt" id="stage">
+                    <div class="globe float">
+                        <div class="core">
+                            <div>
+                                <span>Điểm nóng môi trường</span>
+                                <strong>3 mặt trận</strong>
+                                <small>Đất • Nước • Không khí</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <article class="badge b1 float">
+                        <em>Đất</em>
+                        <h3>Đất nhiễm chì và rác điện tử</h3>
+                        <p>Kim loại nặng đi vào đất, bụi và chuỗi thực phẩm từ pin, sơn cũ và tái chế không an toàn.</p>
+                    </article>
+
+                    <article class="badge b2 float">
+                        <em>Nước</em>
+                        <h3>Nước bẩn kéo theo bệnh tật</h3>
+                        <p>Nước uống không an toàn và vệ sinh kém tiếp tục tác động trực tiếp tới sức khỏe cộng đồng.</p>
+                    </article>
+
+                    <article class="badge b3 float">
+                        <em>Không khí</em>
+                        <h3>Bụi mịn bao phủ thành phố</h3>
+                        <p>PM2.5, khí thải giao thông và công nghiệp đang che mờ ranh giới giữa phát triển và trả giá.</p>
+                    </article>
+
+                    <div class="note">
+                        <span class="dot" aria-hidden="true"></span>
+                        <div>
+                            <strong>Trang đã được làm lại mạnh tay</strong>
+                            <p>GSAP, ScrollTrigger và VanillaTilt đang điều khiển reveal, hover, tilt và các chuyển động tương tác chính của trang.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="issues">
+            <div class="wrap">
+                <div class="intro">
+                    <div>
+                        <span class="eyebrow" data-r>Tín hiệu cảnh báo</span>
+                        <h2 data-r>Ba lớp ô nhiễm đang chồng lên nhau.</h2>
+                    </div>
+                    <p data-r>
+                        Ô nhiễm đất không nằm riêng dưới chân chúng ta, ô nhiễm nước không dừng lại ở dòng sông, và ô nhiễm không khí không chỉ là một lớp sương mờ. Trang mới tách rõ ba nhóm nội dung này để người xem không bỏ sót mối liên hệ giữa chúng.
+                    </p>
+                </div>
+
+                <div class="cards3">
+                    <article class="card tilt" data-r>
+                        <div class="icon"><i class="ph-bold ph-shovel"></i></div>
+                        <h3>Đất mẹ đang giữ lại quá nhiều độc chất.</h3>
+                        <p>Chất thải công nghiệp, pin cũ, thuốc bảo vệ thực vật và tái chế không kiểm soát khiến đất tích tụ kim loại nặng, làm suy yếu hệ sinh thái và tăng nguy cơ phơi nhiễm qua bụi, rau màu, nước ngầm.</p>
+                        <div class="tags"><span>Chì</span><span>Cadimi</span><span>Rác điện tử</span><span>Suy thoái đất</span></div>
+                    </article>
+
+                    <article class="card tilt" data-r>
+                        <div class="icon"><i class="ph-bold ph-drop"></i></div>
+                        <h3>Dòng nước mang theo cả hóa chất lẫn mầm bệnh.</h3>
+                        <p>Khi nước thải không được xử lý đúng cách, con người phải đối mặt với ô nhiễm phân, vi sinh vật gây bệnh và các chất độc đi thẳng vào nguồn nước sinh hoạt, trường học, bệnh viện và khu dân cư.</p>
+                        <div class="tags"><span>Nước uống</span><span>WASH</span><span>Vi sinh</span><span>Nước ngầm</span></div>
+                    </article>
+
+                    <article class="card tilt" data-r>
+                        <div class="icon"><i class="ph-bold ph-wind"></i></div>
+                        <h3>Không khí bẩn đã trở thành nguy cơ thường trực.</h3>
+                        <p>Khói xe, đốt nhiên liệu hóa thạch, công nghiệp và đốt ngoài trời phát tán bụi mịn cùng khí độc. Hậu quả là bệnh tim mạch, đột quỵ, COPD và ung thư phổi không còn là rủi ro xa xôi.</p>
+                        <div class="tags"><span>PM2.5</span><span>NO₂</span><span>SO₂</span><span>Đốt nhiên liệu</span></div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="evidence">
+            <div class="wrap">
+                <div class="intro">
+                    <div>
+                        <span class="eyebrow" data-r>Dẫn chứng chính thống</span>
+                        <h2 data-r>Số liệu khiến thông điệp không còn mơ hồ.</h2>
+                    </div>
+                    <p data-r>
+                        Phần này bổ sung các dẫn chứng trực tiếp cho ô nhiễm đất, nước và không khí. Nguồn được gắn ngay trên từng thẻ để người xem có thể kiểm tra thay vì chỉ đọc các khẩu hiệu chung chung.
+                    </p>
+                </div>
+
+                <div class="proofs">
+                    <article class="proof tilt" data-r>
+                        <div class="phead">
+                            <div>
+                                <span class="ptype">Ô nhiễm đất</span>
+                                <div class="stat"><span class="count" data-to="800" data-suf="M">0</span></div>
+                            </div>
+                            <div class="picon"><i class="ph-bold ph-warning-diamond"></i></div>
+                        </div>
+                        <h3>Tới 800 triệu trẻ em bị đe dọa bởi phơi nhiễm chì.</h3>
+                        <p>UNICEF cho biết khoảng 1 trong 3 trẻ em trên thế giới có nồng độ chì trong máu từ 5 µg/dL trở lên. Chì có thể phát tán từ đất, bụi, khu tái chế pin, rác điện tử và khu công nghiệp xử lý kém an toàn.</p>
+                        <div class="mini">
+                            <strong><span class="count" data-to="1.5" data-dec="1" data-suf="M">0</span> ca tử vong</strong>
+                            <span>WHO ước tính phơi nhiễm chì liên quan tới hơn 1,5 triệu ca tử vong toàn cầu trong năm 2021.</span>
+                        </div>
+                        <div class="sources">
+                            <a href="https://www.unicef.org/reports/toxic-truth-childrens-exposure-to-lead-pollution-2020" target="_blank" rel="noopener noreferrer">UNICEF<i class="ph-bold ph-arrow-up-right"></i></a>
+                            <a href="https://www.who.int/news-room/fact-sheets/detail/lead-poisoning-and-health" target="_blank" rel="noopener noreferrer">WHO<i class="ph-bold ph-arrow-up-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="proof tilt" data-r>
+                        <div class="phead">
+                            <div>
+                                <span class="ptype">Ô nhiễm nước</span>
+                                <div class="stat"><span class="count" data-to="2.1" data-dec="1" data-suf="B">0</span></div>
+                            </div>
+                            <div class="picon"><i class="ph-bold ph-drop-half-bottom"></i></div>
+                        </div>
+                        <h3>Hơn 2,1 tỷ người vẫn chưa có nước uống được quản lý an toàn.</h3>
+                        <p>Theo UN-Water, hàng tỷ người vẫn thiếu nước uống an toàn và vệ sinh cơ bản. Điều đó biến ô nhiễm nước từ một vấn đề môi trường thành một gánh nặng y tế, giáo dục và bất bình đẳng xã hội.</p>
+                        <div class="mini">
+                            <strong><span class="count" data-to="1000" data-suf="+">0</span> trẻ dưới 5 tuổi mỗi ngày</strong>
+                            <span>Nước, vệ sinh và vệ sinh cá nhân không an toàn gây ra khoảng 1.000 ca tử vong/ngày ở trẻ nhỏ.</span>
+                        </div>
+                        <div class="sources">
+                            <a href="https://www.unwater.org/water-facts/wash-water-sanitation-and-hygiene" target="_blank" rel="noopener noreferrer">UN-Water<i class="ph-bold ph-arrow-up-right"></i></a>
+                            <a href="https://www.who.int/news/item/05-09-2023-unsafe-water--sanitation-and-hygiene--a-persistent-health-burden" target="_blank" rel="noopener noreferrer">WHO<i class="ph-bold ph-arrow-up-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="proof tilt" data-r>
+                        <div class="phead">
+                            <div>
+                                <span class="ptype">Ô nhiễm không khí</span>
+                                <div class="stat"><span class="count" data-to="99" data-suf="%">0</span></div>
+                            </div>
+                            <div class="picon"><i class="ph-bold ph-cloud-fog"></i></div>
+                        </div>
+                        <h3>Gần như toàn bộ dân số thế giới đang hít thở không khí vượt chuẩn WHO.</h3>
+                        <p>WHO cho biết 99% dân số toàn cầu sống trong môi trường có chất lượng không khí vượt ngưỡng hướng dẫn. Bụi mịn và khí độc đi sâu vào phổi, mạch máu và kéo theo nhiều bệnh nghiêm trọng.</p>
+                        <div class="mini">
+                            <strong><span class="count" data-to="7" data-suf="M">0</span> ca tử vong mỗi năm</strong>
+                            <span>Ô nhiễm không khí ngoài trời và trong nhà gây khoảng 7 triệu ca tử vong toàn cầu mỗi năm.</span>
+                        </div>
+                        <div class="sources">
+                            <a href="https://www.who.int/health-topics/air-pollution" target="_blank" rel="noopener noreferrer">WHO Air<i class="ph-bold ph-arrow-up-right"></i></a>
+                            <a href="https://www.who.int/westernpacific/health-topics/air-pollution" target="_blank" rel="noopener noreferrer">WHO WPRO<i class="ph-bold ph-arrow-up-right"></i></a>
+                        </div>
+                    </article>
+
+                    <aside class="side" data-r>
+                        <h3>Ba dẫn chứng, một kết luận</h3>
+                        <p>Ô nhiễm không tách rời nhau. Đất ô nhiễm có thể ngấm xuống nước. Nước bẩn ảnh hưởng sức khỏe cộng đồng. Không khí bẩn làm bệnh nền nặng hơn và kéo dài chi phí y tế lẫn kinh tế.</p>
+                        <div class="rows">
+                            <div class="row">
+                                <div class="box"><i class="ph-bold ph-flask"></i></div>
+                                <div><strong><span class="count" data-to="1.5" data-dec="1" data-suf="M">0</span> ca tử vong do phơi nhiễm chì</strong><span>Dữ liệu WHO, năm 2021.</span></div>
+                            </div>
+                            <div class="row">
+                                <div class="box"><i class="ph-bold ph-baby"></i></div>
+                                <div><strong><span class="count" data-to="1000" data-suf="+">0</span> trẻ dưới 5 tuổi tử vong mỗi ngày</strong><span>Liên quan tới nước, vệ sinh và vệ sinh cá nhân không an toàn.</span></div>
+                            </div>
+                            <div class="row">
+                                <div class="box"><i class="ph-bold ph-heartbeat"></i></div>
+                                <div><strong><span class="count" data-to="7" data-suf="M">0</span> ca tử vong vì ô nhiễm không khí</strong><span>Ước tính toàn cầu của WHO mỗi năm.</span></div>
+                            </div>
+                        </div>
+                        <div class="quote">Dữ liệu trên trang ưu tiên nguồn chính thống như WHO, UN-Water và UNICEF thay vì blog trung gian.</div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <section id="solutions">
+            <div class="wrap">
+                <div class="intro">
+                    <div>
+                        <span class="eyebrow" data-r>Giải pháp</span>
+                        <h2 data-r>Biến cảm xúc thành hành động cụ thể.</h2>
+                    </div>
+                    <p data-r>
+                        Sau phần cảnh báo và dẫn chứng, trang cần trả lời câu hỏi quan trọng nhất: người xem phải làm gì tiếp theo. Phần này chuyển landing page từ “đẹp để xem” thành “đủ thuyết phục để tham gia”.
+                    </p>
+                </div>
+
+                <div class="solutions">
+                    <article class="panel" data-r>
+                        <h3>Trạm Xanh hoạt động như một điểm đổi rác lấy giá trị xanh.</h3>
+                        <p>Mô hình phù hợp với nội dung trang: thu gom vật liệu tái chế, hướng dẫn phân loại đúng, đổi lấy cây giống hoặc điểm thưởng, rồi kể lại tác động qua dữ liệu trực quan.</p>
+                        <div class="stack">
+                            <div class="item"><i class="ph-bold ph-recycle"></i><div><strong>Thu gom đúng nhóm rác</strong><span>Nhựa, giấy, pin cũ và rác điện tử được tách riêng ngay từ đầu.</span></div><i class="ph-bold ph-arrow-right go"></i></div>
+                            <div class="item"><i class="ph-bold ph-scan"></i><div><strong>Gắn nhãn nguồn phát sinh</strong><span>Nhìn rõ rác đến từ trường học, gia đình, cửa hàng hay doanh nghiệp.</span></div><i class="ph-bold ph-arrow-right go"></i></div>
+                            <div class="item"><i class="ph-bold ph-plant"></i><div><strong>Đổi lấy cây giống hoặc quà xanh</strong><span>Tạo phần thưởng hữu hình để hành động môi trường trở nên gần gũi hơn.</span></div><i class="ph-bold ph-arrow-right go"></i></div>
+                            <div class="item"><i class="ph-bold ph-chart-line-up"></i><div><strong>Kể lại tác động bằng dashboard</strong><span>Người tham gia nhìn thấy tiến độ thay vì gửi đồ rồi quên mất.</span></div><i class="ph-bold ph-arrow-right go"></i></div>
+                        </div>
+                    </article>
+
+                    <article class="panel" data-r>
+                        <h3>Thiết kế phần hành động đã được đẩy lên một cấp độ rõ ràng hơn.</h3>
+                        <p>Các ô dữ liệu dưới đây không giả làm báo cáo thật, mà đóng vai trò như một bảng điều khiển truyền thông để người xem hiểu trang đang ưu tiên điều gì.</p>
+                        <div class="dash">
+                            <div class="tile"><small>Mục tiêu</small><strong class="count" data-to="3">0</strong><div class="bar"><div class="fill" style="--w:92%"></div></div></div>
+                            <div class="tile"><small>Phân loại trước xử lý</small><strong class="count" data-to="100" data-suf="%">0</strong><div class="bar"><div class="fill" style="--w:100%"></div></div></div>
+                            <div class="tile"><small>Thói quen mỗi tuần</small><strong class="count" data-to="1">0</strong><div class="bar"><div class="fill" style="--w:72%"></div></div></div>
+                            <div class="tile"><small>Lý do trì hoãn</small><strong class="count" data-to="0">0</strong><div class="bar"><div class="fill" style="--w:18%"></div></div></div>
+                        </div>
+                        <div class="steps">
+                            <div class="item"><div class="n">1</div><div><strong>Mang vật liệu sạch đến điểm thu gom</strong><span>Chụp ảnh, cân ký và xác nhận loại vật liệu ngay tại quầy.</span></div></div>
+                            <div class="item"><div class="n">2</div><div><strong>Nhận cây, điểm thưởng hoặc tài liệu hướng dẫn</strong><span>Phần thưởng tạo vòng lặp tích cực thay vì chỉ kêu gọi bằng khẩu hiệu.</span></div></div>
+                            <div class="item"><div class="n">3</div><div><strong>Theo dõi tác động sau mỗi đợt thu gom</strong><span>Biết lượng rác được chuyển đi đâu và loại nào cần giảm từ gốc.</span></div></div>
+                        </div>
+                        <div class="quote">Một landing page môi trường đẹp là chưa đủ. Nó phải khiến người xem hiểu vấn đề, nhớ con số và biết bước tiếp theo của mình.</div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="cta">
+            <div class="wrap">
+                <div class="cta" data-r>
+                    <div class="ctagrid">
+                        <div>
+                            <span class="eyebrow">Kết nối ngay</span>
+                            <h2>Viết tiếp câu chuyện của Trạm Xanh.</h2>
+                            <p>Để lại email để nhận thông tin về điểm thu gom mới, tài liệu truyền thông ngắn gọn và các cập nhật nội dung nếu bạn muốn mở rộng landing page này thành một chiến dịch hoàn chỉnh.</p>
+                            <form class="mail" id="mail" novalidate>
+                                <input id="email" type="email" placeholder="Email của bạn" aria-label="Email của bạn" required>
+                                <button class="btn primary magnetic" type="submit"><i class="ph-bold ph-paper-plane-tilt"></i>Nhận cập nhật</button>
+                            </form>
+                        </div>
+                        <div class="chips">
+                            <article class="chip"><small>Tập trung</small><strong>Đất</strong><span>Chì, rác điện tử, phân loại chất thải.</span></article>
+                            <article class="chip"><small>Tập trung</small><strong>Nước</strong><span>Nước uống an toàn, vệ sinh và xử lý dòng thải.</span></article>
+                            <article class="chip"><small>Tập trung</small><strong>Không khí</strong><span>Bụi mịn, khí thải và hô hấp cộng đồng.</span></article>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="foot">
+                    <p>&copy; <span id="year"></span> TRẠM XANH. Thiết kế lại để giàu tương tác, rõ dẫn chứng và thuyết phục hơn.</p>
+                    <div class="socials">
+                        <a href="#hero" aria-label="Lên đầu trang"><i class="ph-bold ph-arrow-up"></i></a>
+                        <a href="#evidence" aria-label="Đi tới phần dẫn chứng"><i class="ph-bold ph-chart-pie-slice"></i></a>
+                        <a href="#cta" aria-label="Đi tới phần đăng ký"><i class="ph-bold ph-envelope-simple"></i></a>
+                    </div>
+                </footer>
+            </div>
+        </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">
+        <i class="ph-bold ph-check-circle"></i>
+        <span>Đã ghi nhận email. Bước tiếp theo là biến sự quan tâm thành hành động.</span>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const bar = document.getElementById('progress');
+            const cursor = document.getElementById('cursor');
+            const topbar = document.getElementById('topbar');
+            const burger = document.getElementById('burger');
+            const menuLinks = [...document.querySelectorAll('.menu a')];
+            const stage = document.getElementById('stage');
+            const toast = document.getElementById('toast');
+            const form = document.getElementById('mail');
+            const email = document.getElementById('email');
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            const noteTitle = document.querySelector('.note strong');
+            const noteText = document.querySelector('.note p');
+            if (noteTitle) noteTitle.textContent = 'Th\u00f4ng \u0111i\u1ec7p r\u00f5 h\u01a1n, tr\u1ea3i nghi\u1ec7m nh\u1eb9 h\u01a1n';
+            if (noteText) noteText.textContent = 'Ph\u1ea7n m\u1edf \u0111\u1ea7u gi\u1edd t\u1eadp trung v\u00e0o \u0111i\u1ec1u ng\u01b0\u1eddi xem c\u1ea7n hi\u1ec3u ngay: \u00f4 nhi\u1ec5m \u0111ang ch\u1ea1m t\u1edbi \u0111\u1ea5t, n\u01b0\u1edbc v\u00e0 kh\u00f4ng kh\u00ed c\u00f9ng l\u00fac.';
+
+            const sectionIntroText = (sectionId, text) => {
+                const node = document.querySelector(`#${sectionId} .intro p`);
+                if (node) node.textContent = text;
+            };
+
+            sectionIntroText('issues', 'Ba v\u1ea5n \u0111\u1ec1 n\u00e0y kh\u00f4ng di\u1ec5n ra t\u00e1ch bi\u1ec7t. \u0110\u1ea5t nhi\u1ec5m \u0111\u1ed9c l\u00e0m b\u1ea9n ngu\u1ed3n n\u01b0\u1edbc, n\u01b0\u1edbc \u00f4 nhi\u1ec5m k\u00e9o theo b\u1ec7nh t\u1eadt, c\u00f2n kh\u00f4ng kh\u00ed b\u1ea9n khi\u1ebfn r\u1ee7i ro s\u1ee9c kh\u1ecfe n\u1eb7ng h\u01a1n v\u00e0 k\u00e9o d\u00e0i h\u01a1n.');
+            sectionIntroText('evidence', 'M\u1ed7i th\u1ebb d\u01b0\u1edbi \u0111\u00e2y k\u1ebft h\u1ee3p s\u1ed1 li\u1ec7u, h\u00ecnh \u1ea3nh v\u00e0 ngu\u1ed3n ch\u00ednh th\u1ed1ng \u0111\u1ec3 ng\u01b0\u1eddi xem n\u1eafm th\u00f4ng tin nhanh h\u01a1n, \u0111\u1ed3ng th\u1eddi v\u1eabn c\u00f3 th\u1ec3 ki\u1ec3m tra l\u1ea1i t\u1eebng d\u1eabn ch\u1ee9ng.');
+            sectionIntroText('solutions', 'Sau khi hi\u1ec3u v\u1ea5n \u0111\u1ec1, ng\u01b0\u1eddi xem c\u1ea7n m\u1ed9t l\u1ed9 tr\u00ecnh \u0111\u1ee7 r\u00f5 \u0111\u1ec3 b\u1eaft \u0111\u1ea7u. Ph\u1ea7n n\u00e0y t\u1eadp trung v\u00e0o c\u00e1c b\u01b0\u1edbc \u0111\u01a1n gi\u1ea3n, d\u1ec5 h\u00ecnh dung v\u00e0 c\u00f3 th\u1ec3 tri\u1ec3n khai trong \u0111\u1eddi s\u1ed1ng h\u1eb1ng ng\u00e0y.');
+
+            const actionPanel = document.querySelectorAll('#solutions .panel')[1];
+            if (actionPanel) {
+                const title = actionPanel.querySelector('h3');
+                const text = actionPanel.querySelector('p');
+                const quote = actionPanel.querySelector('.quote');
+                if (title) title.textContent = 'B\u1eaft \u0111\u1ea7u t\u1eeb vi\u1ec7c nh\u1ecf, nh\u01b0ng ph\u1ea3i \u0111\u1ee7 c\u1ee5 th\u1ec3 \u0111\u1ec3 l\u00e0m ngay.';
+                if (text) text.textContent = 'C\u00e1c \u00f4 th\u00f4ng tin d\u01b0\u1edbi \u0111\u00e2y \u0111\u00f3ng vai tr\u00f2 nh\u01b0 checklist \u01b0u ti\u00ean: bi\u1ebft m\u00ecnh c\u1ea7n nh\u1eafm v\u00e0o \u0111\u00e2u tr\u01b0\u1edbc, duy tr\u00ec th\u00f3i quen n\u00e0o v\u00e0 lo\u1ea1i b\u1ecf l\u00fd do tr\u00ec ho\u00e3n n\u00e0o.';
+                if (quote) quote.textContent = 'N\u1ebfu ng\u01b0\u1eddi xem r\u1eddi trang m\u00e0 v\u1eabn ch\u01b0a bi\u1ebft m\u00ecnh n\u00ean l\u00e0m g\u00ec h\u00f4m nay, th\u00ec th\u00f4ng \u0111i\u1ec7p v\u1eabn ch\u01b0a \u0111\u1ee7 s\u1ee9c thuy\u1ebft ph\u1ee5c.';
+            }
+
+            const proofImages = [
+                {
+                    selector: '#evidence .proof:nth-child(1)',
+                    src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80',
+                    alt: 'Khu v\u1ef1c \u0111\u1ea5t b\u1ecb \u0111\u00e0o x\u1edbi v\u00e0 \u00f4 nhi\u1ec5m c\u00f4ng nghi\u1ec7p'
+                },
+                {
+                    selector: '#evidence .proof:nth-child(2)',
+                    src: 'https://images.unsplash.com/photo-1473773508845-188df298d2d1?auto=format&fit=crop&w=1200&q=80',
+                    alt: 'Ngu\u1ed3n n\u01b0\u1edbc b\u1ecb \u00f4 nhi\u1ec5m g\u1ea7n khu d\u00e2n c\u01b0'
+                },
+                {
+                    selector: '#evidence .proof:nth-child(3)',
+                    src: 'https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1200&q=80',
+                    alt: 'Th\u00e0nh ph\u1ed1 ch\u00ecm trong kh\u00f3i b\u1ee5i v\u00e0 s\u01b0\u01a1ng m\u00f9 \u00f4 nhi\u1ec5m'
+                }
+            ];
+
+            proofImages.forEach(({ selector, src, alt }) => {
+                const card = document.querySelector(selector);
+                if (!card || card.querySelector('.proof-media')) return;
+                const img = document.createElement('img');
+                img.className = 'proof-media';
+                img.src = src;
+                img.alt = alt;
+                const heading = card.querySelector('h3');
+                if (heading) card.insertBefore(img, heading);
+            });
+
+            const paintTop = (scroll, limit) => {
+                topbar.classList.toggle('scrolled', scroll > 40);
+                const max = limit || (document.documentElement.scrollHeight - window.innerHeight);
+                bar.style.width = (max > 0 ? Math.min(scroll / max * 100, 100) : 0) + '%';
+            };
+
+            const onScroll = () => paintTop(window.scrollY, document.documentElement.scrollHeight - window.innerHeight);
+            onScroll();
+            window.addEventListener('scroll', onScroll, { passive: true });
+
+            const closeMenu = () => { topbar.classList.remove('open'); burger.setAttribute('aria-expanded', 'false'); };
+            burger.addEventListener('click', () => {
+                const open = topbar.classList.toggle('open');
+                burger.setAttribute('aria-expanded', String(open));
+            });
+            document.addEventListener('click', e => { if (!topbar.contains(e.target)) closeMenu(); });
+
+            document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+                const target = document.querySelector(a.getAttribute('href'));
+                if (!target) return;
+                e.preventDefault();
+                closeMenu();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }));
+
+            if (!reduce) window.addEventListener('pointermove', e => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+
+            if (!reduce && stage && window.gsap) {
+                const floats = stage.querySelectorAll('.float');
+                stage.addEventListener('pointermove', e => {
+                    const r = stage.getBoundingClientRect();
+                    const x = (e.clientX - r.left) / r.width - .5;
+                    const y = (e.clientY - r.top) / r.height - .5;
+                    floats.forEach((el, i) => gsap.to(el, { x: x * (18 + i * 4), y: y * (18 + i * 4), duration: .8, overwrite: true, ease: 'power3.out' }));
+                });
+                stage.addEventListener('pointerleave', () => floats.forEach(el => gsap.to(el, { x: 0, y: 0, duration: .9, ease: 'elastic.out(1,.45)' })));
+            }
+
+            if (window.VanillaTilt && !reduce) {
+                VanillaTilt.init(document.querySelectorAll('.tilt'), { max: 9, speed: 400, scale: 1.01, glare: true, 'max-glare': .1 });
+            }
+
+            const fmt = (n, d = 0, pre = '', suf = '') => pre + Number(n).toLocaleString('vi-VN', { minimumFractionDigits: d, maximumFractionDigits: d }) + suf;
+            const runCount = el => {
+                if (el.dataset.done) return;
+                const target = Number(el.dataset.to || 0), dec = Number(el.dataset.dec || 0), pre = el.dataset.pre || '', suf = el.dataset.suf || '';
+                if (!window.gsap || reduce) { el.textContent = fmt(target, dec, pre, suf); el.dataset.done = 1; return; }
+                const o = { v: 0 };
+                gsap.to(o, {
+                    v: target, duration: 1.8, ease: 'power2.out',
+                    onUpdate: () => { el.textContent = fmt(o.v, dec, pre, suf); },
+                    onComplete: () => { el.textContent = fmt(target, dec, pre, suf); el.dataset.done = 1; }
+                });
+            };
+
+            if (window.gsap && window.ScrollTrigger) {
+                gsap.registerPlugin(ScrollTrigger);
+                gsap.timeline({ defaults: { ease: 'power3.out' } })
+                    .from('.hero .eyebrow', { opacity: 0, y: 18, duration: .8 })
+                    .from('.hero h1', { opacity: 0, y: 36, duration: 1 }, '-=.45')
+                    .from('.hero .lead', { opacity: 0, y: 28, duration: .8 }, '-=.55')
+                    .from('.hero-actions .btn', { opacity: 0, y: 20, duration: .7, stagger: .1 }, '-=.45')
+                    .from('.metrics .metric', { opacity: 0, y: 20, duration: .7, stagger: .1 }, '-=.45')
+                    .from('.stage', { opacity: 0, y: 28, scale: .96, duration: 1 }, '-=.7')
+                    .from('.badge', { opacity: 0, y: 28, duration: .7, stagger: .12 }, '-=.6')
+                    .from('.note', { opacity: 0, y: 20, duration: .7 }, '-=.45');
+
+                gsap.utils.toArray('[data-r]').forEach(el => gsap.to(el, {
+                    opacity: 1, y: 0, duration: .85, ease: 'power3.out',
+                    scrollTrigger: { trigger: el, start: 'top 86%', once: true }
+                }));
+
+                gsap.utils.toArray('.fill').forEach(el => gsap.from(el, {
+                    scaleX: 0, duration: 1.2, ease: 'power3.out',
+                    scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+                }));
+
+                gsap.utils.toArray('main section[id]').forEach(sec => ScrollTrigger.create({
+                    trigger: sec, start: 'top center', end: 'bottom center',
+                    onToggle: s => { if (!s.isActive) return; menuLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + sec.id)); }
+                }));
+
+                gsap.to('.globe', { rotation: 360, duration: 42, repeat: -1, ease: 'none' });
+
+                document.querySelectorAll('.count').forEach(el => ScrollTrigger.create({
+                    trigger: el, start: 'top 92%', once: true, onEnter: () => runCount(el)
+                }));
+            } else {
+                document.querySelectorAll('[data-r]').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+                document.querySelectorAll('.count').forEach(runCount);
+            }
+
+            document.querySelectorAll('.magnetic').forEach(btn => {
+                if (!window.gsap || reduce) return;
+                btn.addEventListener('mousemove', e => {
+                    const r = btn.getBoundingClientRect();
+                    const x = ((e.clientX - r.left) / r.width - .5) * 16;
+                    const y = ((e.clientY - r.top) / r.height - .5) * 16;
+                    gsap.to(btn, { x, y, duration: .25, overwrite: true, ease: 'power2.out' });
+                });
+                btn.addEventListener('mouseleave', () => gsap.to(btn, { x: 0, y: 0, duration: .55, ease: 'elastic.out(1,.45)' }));
+            });
+
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+                if (!email.checkValidity()) return email.reportValidity();
+                toast.classList.add('show');
+                form.reset();
+                setTimeout(() => toast.classList.remove('show'), 3600);
+            });
+        });
+    </script>
+</body>
+</html>
