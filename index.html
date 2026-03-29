@@ -12,20 +12,20 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
         :root {
-            --bg: #eef8f5;
-            --bg2: #dff1eb;
-            --panel: rgba(255, 255, 255, 0.82);
-            --line: rgba(51, 98, 86, 0.12);
-            --line2: rgba(51, 98, 86, 0.24);
-            --text: #17352d;
-            --muted: #58756d;
-            --green: #2aa36b;
-            --blue: #3ab6b3;
-            --gold: #f1b65f;
-            --danger: #da6e6e;
-            --shadow: 0 28px 70px rgba(35,75,66,.12);
+            --bg: #f2faf8;
+            --bg2: #e0f2ed;
+            --panel: rgba(255, 255, 255, 0.88);
+            --line: rgba(6, 44, 35, 0.08);
+            --line2: rgba(6, 44, 35, 0.16);
+            --text: #062c23; /* Deep Emerald */
+            --muted: #4a6b62;
+            --green: #1a8e5f;
+            --blue: #2d9d9b;
+            --gold: #d4a017; /* Metallic Gold */
+            --danger: #c54e4e;
+            --shadow: 0 32px 80px rgba(6, 44, 35, 0.08);
             --ease: cubic-bezier(.22,1,.36,1);
-            --max: 1180px;
+            --max: 1240px;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
@@ -33,12 +33,12 @@
             font-family: 'Be Vietnam Pro', sans-serif;
             color: var(--text);
             background:
-                radial-gradient(circle at 12% 14%, rgba(58,182,179,.16), transparent 24%),
-                radial-gradient(circle at 84% 12%, rgba(42,163,107,.12), transparent 28%),
-                linear-gradient(180deg, #f6fcf9 0%, #edf8f4 45%, #e8f4ef 100%);
+                radial-gradient(circle at 12% 14%, rgba(45, 157, 155, 0.1), transparent 35%),
+                radial-gradient(circle at 84% 12%, rgba(26, 142, 95, 0.08), transparent 40%),
+                linear-gradient(180deg, #f8fdfc 0%, #f2faf8 45%, #ecf7f4 100%);
             min-height: 100vh;
             overflow-x: hidden;
-            line-height: 1.6;
+            line-height: 1.75; /* Improved readability */
         }
         body::before {
             content: "";
@@ -83,12 +83,19 @@
             transform: translateX(-125%); transition: transform .75s ease;
         }
         .btn:hover::before { transform: translateX(125%); }
-        .btn:hover { transform: translateY(-4px); }
+        .btn:hover { transform: none; }
         .btn.primary { color: #f9fffc; background: linear-gradient(135deg, #24905f, var(--green) 52%, var(--blue)); box-shadow: 0 14px 36px rgba(58,182,179,.18); }
         .btn.secondary { color: var(--text); background: rgba(255,255,255,.72); border-color: var(--line); }
+        .btn.magnetic { transition: box-shadow .35s ease, border-color .35s ease, background .35s ease !important; }
         .eyebrow { display: inline-flex; align-items: center; gap: .65rem; color: var(--green); font-size: .82rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
         .eyebrow::before { content: ""; width: 38px; height: 1px; background: linear-gradient(90deg, var(--green), transparent); }
-        h1, h2, .display { font-family: 'Bodoni Moda', serif; line-height: .94; letter-spacing: -.04em; }
+        h1, h2, .display { 
+            font-family: 'Bodoni Moda', serif; 
+            line-height: 1.1; 
+            letter-spacing: -0.02em; 
+            font-weight: 700;
+        }
+        h2 { font-size: clamp(2.8rem, 5vw, 4.2rem); }
         .js [data-r] { opacity: 0; transform: translateY(28px); }
         /* CSS_NAV */
         header {
@@ -147,7 +154,7 @@
         .hero::after { width: 26rem; height: 26rem; right: -8rem; bottom: -6rem; background: radial-gradient(circle, rgba(42,163,107,.14), transparent 72%); }
         .hero-grid { display: grid; grid-template-columns: minmax(0,1.05fr) minmax(0,.95fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; }
         .hero h1 { font-size: clamp(3.6rem, 8vw, 7rem); max-width: 10ch; text-wrap: balance; }
-        .grad { background: linear-gradient(135deg, #bbf5aa, #67e6ff 50%, #ffe08d); -webkit-background-clip: text; color: transparent; }
+        .grad { background: linear-gradient(135deg, #bbf5aa, #67e6ff 50%, #ffe08d); -webkit-background-clip: text; background-clip: text; color: transparent; }
         .hero p.lead { margin-top: 1.5rem; max-width: 36rem; font-size: 1.05rem; color: var(--muted); }
         .hero-actions { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 2rem; }
         .metrics { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1rem; margin-top: 2.2rem; }
@@ -333,6 +340,75 @@
         }
         .toast.show { transform: translateY(0); }
         .toast i { color: var(--green); font-size: 1.3rem; }
+        /* CSS_GALLERY */
+        .gallery {
+            display: flex;
+            gap: 1.25rem;
+            width: 100%;
+            height: clamp(400px, 65vh, 600px);
+            margin: 3.5rem 0;
+        }
+        .g-card {
+            position: relative;
+            flex: 1;
+            border-radius: 36px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: flex 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s var(--ease);
+            border: 1px solid var(--line);
+            box-shadow: 0 12px 40px rgba(6, 44, 35, 0.06);
+        }
+        .g-card:hover {
+            flex: 5;
+            transform: translateY(-8px);
+            box-shadow: var(--shadow);
+        }
+        .g-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            filter: grayscale(20%) brightness(0.9);
+        }
+        .g-card:hover img {
+            transform: scale(1.08);
+            filter: grayscale(0%) brightness(1);
+        }
+        .g-content {
+            position: absolute;
+            inset: 0;
+            padding: clamp(1.5rem, 5vw, 3rem);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            background: linear-gradient(0deg, rgba(6,44,35,0.9) 0%, rgba(6,44,35,0.4) 50%, transparent 100%);
+            color: #fff;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            pointer-events: none;
+            white-space: normal;
+        }
+        .g-card:hover .g-content {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.3s;
+        }
+        .g-card h4 { font-family: 'Bodoni Moda', serif; font-size: clamp(1.8rem, 3vw, 2.8rem); margin-bottom: 0.8rem; line-height: 1.1; }
+        .g-card p { font-size: 1.05rem; color: rgba(255,255,255,0.85); max-width: 45ch; line-height: 1.6; }
+        .g-stat { margin-top: 1.5rem; display: flex; gap: 2rem; }
+        .g-stat div { display: flex; flex-direction: column; }
+        .g-stat strong { font-size: 1.8rem; color: var(--gold); }
+        .g-stat span { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.7; }
+        
+        @media (max-width: 900px) {
+            .gallery { flex-direction: column; height: auto; gap: 1rem; }
+            .g-card { flex: none; height: 350px; }
+            .g-card:hover { flex: none; }
+            .g-content { opacity: 1; transform: translateY(0); padding: 1.5rem; }
+            .g-card h4 { font-size: 1.6rem; }
+        }
+
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(115,226,126,.5); } 70% { box-shadow: 0 0 0 14px rgba(115,226,126,0); } 100% { box-shadow: 0 0 0 0 rgba(115,226,126,0); } }
@@ -384,10 +460,10 @@
             <nav aria-label="Điều hướng chính">
                 <ul class="menu" id="menu">
                     <li><a class="active" href="#hero">Mở đầu</a></li>
-                    <li><a href="#issues">Cảnh báo</a></li>
-                    <li><a href="#evidence">Dẫn chứng</a></li>
+                    <li><a href="#air">Phổi xanh</a></li>
+                    <li><a href="#water">Nguồn sống</a></li>
+                    <li><a href="#soil">Đất mẹ</a></li>
                     <li><a href="#solutions">Giải pháp</a></li>
-                    <li><a href="#cta">Tham gia</a></li>
                 </ul>
             </nav>
             <div class="head-actions">
@@ -467,135 +543,152 @@
             </div>
         </section>
 
-        <section id="issues">
+        <section id="air">
             <div class="wrap">
                 <div class="intro">
                     <div>
-                        <span class="eyebrow" data-r>Tín hiệu cảnh báo</span>
-                        <h2 data-r>Ba lớp ô nhiễm đang chồng lên nhau.</h2>
+                        <span class="eyebrow" data-r>Hơi thở của đô thị</span>
+                        <h2 data-r>Không khí bẩn: Sát thủ thầm lặng.</h2>
                     </div>
                     <p data-r>
-                        Ô nhiễm đất không nằm riêng dưới chân chúng ta, ô nhiễm nước không dừng lại ở dòng sông, và ô nhiễm không khí không chỉ là một lớp sương mờ. Trang mới tách rõ ba nhóm nội dung này để người xem không bỏ sót mối liên hệ giữa chúng.
+                        99% dân số thế giới đang hít thở bầu không khí vượt ngưỡng an toàn của WHO. Bụi mịn PM2.5 len lỏi vào từng phế nang, mạch máu, gây ra hàng triệu ca tử vong sớm mỗi năm.
                     </p>
                 </div>
 
-                <div class="cards3">
-                    <article class="card tilt" data-r>
-                        <div class="icon"><i class="ph-bold ph-shovel"></i></div>
-                        <h3>Đất mẹ đang giữ lại quá nhiều độc chất.</h3>
-                        <p>Chất thải công nghiệp, pin cũ, thuốc bảo vệ thực vật và tái chế không kiểm soát khiến đất tích tụ kim loại nặng, làm suy yếu hệ sinh thái và tăng nguy cơ phơi nhiễm qua bụi, rau màu, nước ngầm.</p>
-                        <div class="tags"><span>Chì</span><span>Cadimi</span><span>Rác điện tử</span><span>Suy thoái đất</span></div>
-                    </article>
-
-                    <article class="card tilt" data-r>
-                        <div class="icon"><i class="ph-bold ph-drop"></i></div>
-                        <h3>Dòng nước mang theo cả hóa chất lẫn mầm bệnh.</h3>
-                        <p>Khi nước thải không được xử lý đúng cách, con người phải đối mặt với ô nhiễm phân, vi sinh vật gây bệnh và các chất độc đi thẳng vào nguồn nước sinh hoạt, trường học, bệnh viện và khu dân cư.</p>
-                        <div class="tags"><span>Nước uống</span><span>WASH</span><span>Vi sinh</span><span>Nước ngầm</span></div>
-                    </article>
-
-                    <article class="card tilt" data-r>
-                        <div class="icon"><i class="ph-bold ph-wind"></i></div>
-                        <h3>Không khí bẩn đã trở thành nguy cơ thường trực.</h3>
-                        <p>Khói xe, đốt nhiên liệu hóa thạch, công nghiệp và đốt ngoài trời phát tán bụi mịn cùng khí độc. Hậu quả là bệnh tim mạch, đột quỵ, COPD và ung thư phổi không còn là rủi ro xa xôi.</p>
-                        <div class="tags"><span>PM2.5</span><span>NO₂</span><span>SO₂</span><span>Đốt nhiên liệu</span></div>
-                    </article>
+                <div class="gallery" data-r>
+                    <div class="g-card">
+                        <img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1200&q=80" alt="Bụi mịn đô thị">
+                        <div class="g-content">
+                            <h4>Bụi mịn PM2.5</h4>
+                            <p>Kẻ thù vô hình có thể xuyên qua khẩu trang thông thường, đi thẳng vào phổi và hệ tuần hoàn.</p>
+                            <div class="g-stat">
+                                <div><strong>99%</strong><span>Dân số bị ảnh hưởng</span></div>
+                                <div><strong>7M</strong><span>Ca tử vong/năm</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="g-card magnetic">
+                        <img src="https://images.unsplash.com/photo-1611273233597-993472bf5952?auto=format&fit=crop&w=1200&q=80" alt="Khí thải giao thông">
+                        <div class="g-content">
+                            <h4>Khí thải Giao thông</h4>
+                            <p>Nguồn phát thải NO2 và CO lớn nhất tại các đô thị, làm gia tăng các bệnh hô hấp mãn tính.</p>
+                            <div class="g-stat">
+                                <div><strong>40%</strong><span>Trong nội đô</span></div>
+                                <div><strong>NO₂</strong><span>Khí độc chính</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="g-card magnetic">
+                        <img src="https://images.unsplash.com/photo-1443397646383-162720487997?auto=format&fit=crop&w=1200&q=80" alt="Đốt rác lộ thiên">
+                        <div class="g-content">
+                            <h4>Phát thải cục bộ</h4>
+                            <p>Đốt rác lộ thiên và phụ phẩm nông nghiệp giải phóng dioxin và carbon đen, làm ô nhiễm tức thì khu dân cư lân cận.</p>
+                            <div class="g-stat">
+                                <div><strong>25%</strong><span>Bụi mịn vùng ven</span></div>
+                                <div><strong>C</strong><span>Carbon đen</span></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="evidence">
+        <section id="water" style="background: var(--bg2);">
             <div class="wrap">
                 <div class="intro">
                     <div>
-                        <span class="eyebrow" data-r>Dẫn chứng chính thống</span>
-                        <h2 data-r>Số liệu khiến thông điệp không còn mơ hồ.</h2>
+                        <span class="eyebrow" data-r>Mạch sống mong manh</span>
+                        <h2 data-r>Dòng chảy bị đầu độc.</h2>
                     </div>
                     <p data-r>
-                        Phần này bổ sung các dẫn chứng trực tiếp cho ô nhiễm đất, nước và không khí. Nguồn được gắn ngay trên từng thẻ để người xem có thể kiểm tra thay vì chỉ đọc các khẩu hiệu chung chung.
+                        Khi nước thải không được xử lý đúng cách, nó biến nguồn tài nguyên quý giá nhất thành gánh nặng bệnh tật. Hàng tỷ người vẫn đang thiếu nước uống an toàn mỗi ngày.
                     </p>
                 </div>
 
-                <div class="proofs">
-                    <article class="proof tilt" data-r>
-                        <div class="phead">
-                            <div>
-                                <span class="ptype">Ô nhiễm đất</span>
-                                <div class="stat"><span class="count" data-to="800" data-suf="M">0</span></div>
+                <div class="gallery" data-r>
+                    <div class="g-card">
+                        <img src="https://images.unsplash.com/photo-1473773508845-188df298d2d1?auto=format&fit=crop&w=1200&q=80" alt="Nước thải công nghiệp">
+                        <div class="g-content">
+                            <h4>Nước thải Công nghiệp</h4>
+                            <p>Kim loại nặng và hóa chất đi thẳng vào sông ngòi, giết chết hệ sinh thái thủy sinh và ngấm vào nông sản.</p>
+                            <div class="g-stat">
+                                <div><strong>80%</strong><span>Nước thải chưa xử lý</span></div>
+                                <div><strong>Hg, Pb</strong><span>Chất độc chính</span></div>
                             </div>
-                            <div class="picon"><i class="ph-bold ph-warning-diamond"></i></div>
                         </div>
-                        <h3>Tới 800 triệu trẻ em bị đe dọa bởi phơi nhiễm chì.</h3>
-                        <p>UNICEF cho biết khoảng 1 trong 3 trẻ em trên thế giới có nồng độ chì trong máu từ 5 µg/dL trở lên. Chì có thể phát tán từ đất, bụi, khu tái chế pin, rác điện tử và khu công nghiệp xử lý kém an toàn.</p>
-                        <div class="mini">
-                            <strong><span class="count" data-to="1.5" data-dec="1" data-suf="M">0</span> ca tử vong</strong>
-                            <span>WHO ước tính phơi nhiễm chì liên quan tới hơn 1,5 triệu ca tử vong toàn cầu trong năm 2021.</span>
+                    </div>
+                    <div class="g-card magnetic">
+                        <img src="https://images.unsplash.com/photo-1532601224476-15c79f2f7a51?auto=format&fit=crop&w=1200&q=80" alt="Rác thải nhựa đại dương">
+                        <div class="g-content">
+                            <h4>Vi nhựa & Rác thải</h4>
+                            <p>Đại dương đang trở thành "bãi rác" khổng lồ, nơi nhựa phân rã thành vi nhựa và quay lại chuỗi thức ăn con người.</p>
+                            <div class="g-stat">
+                                <div><strong>8M</strong><span>Tấn nhựa/năm</span></div>
+                                <div><strong>1000y</strong><span>Thời gian phân hủy</span></div>
+                            </div>
                         </div>
-                        <div class="sources">
-                            <a href="https://www.unicef.org/reports/toxic-truth-childrens-exposure-to-lead-pollution-2020" target="_blank" rel="noopener noreferrer">UNICEF<i class="ph-bold ph-arrow-up-right"></i></a>
-                            <a href="https://www.who.int/news-room/fact-sheets/detail/lead-poisoning-and-health" target="_blank" rel="noopener noreferrer">WHO<i class="ph-bold ph-arrow-up-right"></i></a>
+                    </div>
+                    <div class="g-card magnetic">
+                        <img src="https://images.unsplash.com/photo-1544333323-c2421448b2ad?auto=format&fit=crop&w=1200&q=80" alt="Ô nhiễm sông ngòi">
+                        <div class="g-content">
+                            <h4>Ngành Dệt nhuộm</h4>
+                            <p>Cứ mỗi tấn vải, hàng trăm mét khối nước chứa thuốc nhuộm và chất tẩy bị xả bỏ, làm biến đổi pH nguồn nước tự nhiên.</p>
+                            <div class="g-stat">
+                                <div><strong>20%</strong><span>Ô nhiễm nước CN</span></div>
+                                <div><strong>pH 12</strong><span>Độ kiềm cực cao</span></div>
+                            </div>
                         </div>
-                    </article>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                    <article class="proof tilt" data-r>
-                        <div class="phead">
-                            <div>
-                                <span class="ptype">Ô nhiễm nước</span>
-                                <div class="stat"><span class="count" data-to="2.1" data-dec="1" data-suf="B">0</span></div>
-                            </div>
-                            <div class="picon"><i class="ph-bold ph-drop-half-bottom"></i></div>
-                        </div>
-                        <h3>Hơn 2,1 tỷ người vẫn chưa có nước uống được quản lý an toàn.</h3>
-                        <p>Theo UN-Water, hàng tỷ người vẫn thiếu nước uống an toàn và vệ sinh cơ bản. Điều đó biến ô nhiễm nước từ một vấn đề môi trường thành một gánh nặng y tế, giáo dục và bất bình đẳng xã hội.</p>
-                        <div class="mini">
-                            <strong><span class="count" data-to="1000" data-suf="+">0</span> trẻ dưới 5 tuổi mỗi ngày</strong>
-                            <span>Nước, vệ sinh và vệ sinh cá nhân không an toàn gây ra khoảng 1.000 ca tử vong/ngày ở trẻ nhỏ.</span>
-                        </div>
-                        <div class="sources">
-                            <a href="https://www.unwater.org/water-facts/wash-water-sanitation-and-hygiene" target="_blank" rel="noopener noreferrer">UN-Water<i class="ph-bold ph-arrow-up-right"></i></a>
-                            <a href="https://www.who.int/news/item/05-09-2023-unsafe-water--sanitation-and-hygiene--a-persistent-health-burden" target="_blank" rel="noopener noreferrer">WHO<i class="ph-bold ph-arrow-up-right"></i></a>
-                        </div>
-                    </article>
+        <section id="soil">
+            <div class="wrap">
+                <div class="intro">
+                    <div>
+                        <span class="eyebrow" data-r>Nền tảng suy kiệt</span>
+                        <h2 data-r>Đất mẹ đang "ngạt thở".</h2>
+                    </div>
+                    <p data-r>
+                        Đất không chỉ là nơi ta đứng, mà là nơi nuôi dưỡng sự sống. Ô nhiễm đất từ rác điện tử và hóa chất nông nghiệp đang làm suy thoái đa dạng sinh học từ gốc rễ.
+                    </p>
+                </div>
 
-                    <article class="proof tilt" data-r>
-                        <div class="phead">
-                            <div>
-                                <span class="ptype">Ô nhiễm không khí</span>
-                                <div class="stat"><span class="count" data-to="99" data-suf="%">0</span></div>
-                            </div>
-                            <div class="picon"><i class="ph-bold ph-cloud-fog"></i></div>
-                        </div>
-                        <h3>Gần như toàn bộ dân số thế giới đang hít thở không khí vượt chuẩn WHO.</h3>
-                        <p>WHO cho biết 99% dân số toàn cầu sống trong môi trường có chất lượng không khí vượt ngưỡng hướng dẫn. Bụi mịn và khí độc đi sâu vào phổi, mạch máu và kéo theo nhiều bệnh nghiêm trọng.</p>
-                        <div class="mini">
-                            <strong><span class="count" data-to="7" data-suf="M">0</span> ca tử vong mỗi năm</strong>
-                            <span>Ô nhiễm không khí ngoài trời và trong nhà gây khoảng 7 triệu ca tử vong toàn cầu mỗi năm.</span>
-                        </div>
-                        <div class="sources">
-                            <a href="https://www.who.int/health-topics/air-pollution" target="_blank" rel="noopener noreferrer">WHO Air<i class="ph-bold ph-arrow-up-right"></i></a>
-                            <a href="https://www.who.int/westernpacific/health-topics/air-pollution" target="_blank" rel="noopener noreferrer">WHO WPRO<i class="ph-bold ph-arrow-up-right"></i></a>
-                        </div>
-                    </article>
-
-                    <aside class="side" data-r>
-                        <h3>Ba dẫn chứng, một kết luận</h3>
-                        <p>Ô nhiễm không tách rời nhau. Đất ô nhiễm có thể ngấm xuống nước. Nước bẩn ảnh hưởng sức khỏe cộng đồng. Không khí bẩn làm bệnh nền nặng hơn và kéo dài chi phí y tế lẫn kinh tế.</p>
-                        <div class="rows">
-                            <div class="row">
-                                <div class="box"><i class="ph-bold ph-flask"></i></div>
-                                <div><strong><span class="count" data-to="1.5" data-dec="1" data-suf="M">0</span> ca tử vong do phơi nhiễm chì</strong><span>Dữ liệu WHO, năm 2021.</span></div>
-                            </div>
-                            <div class="row">
-                                <div class="box"><i class="ph-bold ph-baby"></i></div>
-                                <div><strong><span class="count" data-to="1000" data-suf="+">0</span> trẻ dưới 5 tuổi tử vong mỗi ngày</strong><span>Liên quan tới nước, vệ sinh và vệ sinh cá nhân không an toàn.</span></div>
-                            </div>
-                            <div class="row">
-                                <div class="box"><i class="ph-bold ph-heartbeat"></i></div>
-                                <div><strong><span class="count" data-to="7" data-suf="M">0</span> ca tử vong vì ô nhiễm không khí</strong><span>Ước tính toàn cầu của WHO mỗi năm.</span></div>
+                <div class="gallery" data-r>
+                    <div class="g-card">
+                        <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb773b09?auto=format&fit=crop&w=1200&q=80" alt="Rác thải điện tử">
+                        <div class="g-content">
+                            <h4>Rác thải Điện tử</h4>
+                            <p>Pin, linh kiện cũ giải phóng chì và cadmium vào đất, đe dọa trực tiếp đến nồng độ kim loại nặng trong máu trẻ em.</p>
+                            <div class="g-stat">
+                                <div><strong>800M</strong><span>Trẻ em bị phơi nhiễm</span></div>
+                                <div><strong>Cd, Pb</strong><span>Tác nhân chính</span></div>
                             </div>
                         </div>
-                        <div class="quote">Dữ liệu trên trang ưu tiên nguồn chính thống như WHO, UN-Water và UNICEF thay vì blog trung gian.</div>
-                    </aside>
+                    </div>
+                    <div class="g-card magnetic">
+                        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80" alt="Đất nông nghiệp suy thoái">
+                        <div class="g-content">
+                            <h4>Lạm dụng Hóa chất</h4>
+                            <p>Thuốc trừ sâu và phân bón hóa học làm đất chai cứng, tiêu diệt vi sinh vật có lợi và làm bẩn mạch nước ngầm.</p>
+                            <div class="g-stat">
+                                <div><strong>33%</strong><span>Diện tích đất suy thoái</span></div>
+                                <div><strong>Cu, Zn</strong><span>Dư lượng cao</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="g-card magnetic">
+                        <img src="https://images.unsplash.com/photo-1592323871239-299f18073bc2?auto=format&fit=crop&w=1200&q=80" alt="Sử dụng kháng sinh trong chăn nuôi">
+                        <div class="g-content">
+                            <h4>Kháng sinh dư thừa</h4>
+                            <p>Dư lượng kháng sinh từ chất thải chăn nuôi làm biến đổi hệ vi sinh đất, tạo ra các loài vi khuẩn siêu kháng thuốc.</p>
+                            <div class="g-stat">
+                                <div><strong>70%</strong><span>Kháng sinh vào đất</span></div>
+                                <div><strong>AMR</strong><span>Kháng kháng sinh</span></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -709,49 +802,6 @@
                 if (node) node.textContent = text;
             };
 
-            sectionIntroText('issues', 'Ba v\u1ea5n \u0111\u1ec1 n\u00e0y kh\u00f4ng di\u1ec5n ra t\u00e1ch bi\u1ec7t. \u0110\u1ea5t nhi\u1ec5m \u0111\u1ed9c l\u00e0m b\u1ea9n ngu\u1ed3n n\u01b0\u1edbc, n\u01b0\u1edbc \u00f4 nhi\u1ec5m k\u00e9o theo b\u1ec7nh t\u1eadt, c\u00f2n kh\u00f4ng kh\u00ed b\u1ea9n khi\u1ebfn r\u1ee7i ro s\u1ee9c kh\u1ecfe n\u1eb7ng h\u01a1n v\u00e0 k\u00e9o d\u00e0i h\u01a1n.');
-            sectionIntroText('evidence', 'M\u1ed7i th\u1ebb d\u01b0\u1edbi \u0111\u00e2y k\u1ebft h\u1ee3p s\u1ed1 li\u1ec7u, h\u00ecnh \u1ea3nh v\u00e0 ngu\u1ed3n ch\u00ednh th\u1ed1ng \u0111\u1ec3 ng\u01b0\u1eddi xem n\u1eafm th\u00f4ng tin nhanh h\u01a1n, \u0111\u1ed3ng th\u1eddi v\u1eabn c\u00f3 th\u1ec3 ki\u1ec3m tra l\u1ea1i t\u1eebng d\u1eabn ch\u1ee9ng.');
-            sectionIntroText('solutions', 'Sau khi hi\u1ec3u v\u1ea5n \u0111\u1ec1, ng\u01b0\u1eddi xem c\u1ea7n m\u1ed9t l\u1ed9 tr\u00ecnh \u0111\u1ee7 r\u00f5 \u0111\u1ec3 b\u1eaft \u0111\u1ea7u. Ph\u1ea7n n\u00e0y t\u1eadp trung v\u00e0o c\u00e1c b\u01b0\u1edbc \u0111\u01a1n gi\u1ea3n, d\u1ec5 h\u00ecnh dung v\u00e0 c\u00f3 th\u1ec3 tri\u1ec3n khai trong \u0111\u1eddi s\u1ed1ng h\u1eb1ng ng\u00e0y.');
-
-            const actionPanel = document.querySelectorAll('#solutions .panel')[1];
-            if (actionPanel) {
-                const title = actionPanel.querySelector('h3');
-                const text = actionPanel.querySelector('p');
-                const quote = actionPanel.querySelector('.quote');
-                if (title) title.textContent = 'B\u1eaft \u0111\u1ea7u t\u1eeb vi\u1ec7c nh\u1ecf, nh\u01b0ng ph\u1ea3i \u0111\u1ee7 c\u1ee5 th\u1ec3 \u0111\u1ec3 l\u00e0m ngay.';
-                if (text) text.textContent = 'C\u00e1c \u00f4 th\u00f4ng tin d\u01b0\u1edbi \u0111\u00e2y \u0111\u00f3ng vai tr\u00f2 nh\u01b0 checklist \u01b0u ti\u00ean: bi\u1ebft m\u00ecnh c\u1ea7n nh\u1eafm v\u00e0o \u0111\u00e2u tr\u01b0\u1edbc, duy tr\u00ec th\u00f3i quen n\u00e0o v\u00e0 lo\u1ea1i b\u1ecf l\u00fd do tr\u00ec ho\u00e3n n\u00e0o.';
-                if (quote) quote.textContent = 'N\u1ebfu ng\u01b0\u1eddi xem r\u1eddi trang m\u00e0 v\u1eabn ch\u01b0a bi\u1ebft m\u00ecnh n\u00ean l\u00e0m g\u00ec h\u00f4m nay, th\u00ec th\u00f4ng \u0111i\u1ec7p v\u1eabn ch\u01b0a \u0111\u1ee7 s\u1ee9c thuy\u1ebft ph\u1ee5c.';
-            }
-
-            const proofImages = [
-                {
-                    selector: '#evidence .proof:nth-child(1)',
-                    src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80',
-                    alt: 'Khu v\u1ef1c \u0111\u1ea5t b\u1ecb \u0111\u00e0o x\u1edbi v\u00e0 \u00f4 nhi\u1ec5m c\u00f4ng nghi\u1ec7p'
-                },
-                {
-                    selector: '#evidence .proof:nth-child(2)',
-                    src: 'https://images.unsplash.com/photo-1473773508845-188df298d2d1?auto=format&fit=crop&w=1200&q=80',
-                    alt: 'Ngu\u1ed3n n\u01b0\u1edbc b\u1ecb \u00f4 nhi\u1ec5m g\u1ea7n khu d\u00e2n c\u01b0'
-                },
-                {
-                    selector: '#evidence .proof:nth-child(3)',
-                    src: 'https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1200&q=80',
-                    alt: 'Th\u00e0nh ph\u1ed1 ch\u00ecm trong kh\u00f3i b\u1ee5i v\u00e0 s\u01b0\u01a1ng m\u00f9 \u00f4 nhi\u1ec5m'
-                }
-            ];
-
-            proofImages.forEach(({ selector, src, alt }) => {
-                const card = document.querySelector(selector);
-                if (!card || card.querySelector('.proof-media')) return;
-                const img = document.createElement('img');
-                img.className = 'proof-media';
-                img.src = src;
-                img.alt = alt;
-                const heading = card.querySelector('h3');
-                if (heading) card.insertBefore(img, heading);
-            });
-
             const paintTop = (scroll, limit) => {
                 topbar.classList.toggle('scrolled', scroll > 40);
                 const max = limit || (document.documentElement.scrollHeight - window.innerHeight);
@@ -849,13 +899,25 @@
 
             document.querySelectorAll('.magnetic').forEach(btn => {
                 if (!window.gsap || reduce) return;
+                const baseHoverY = btn.classList.contains('btn') ? -4 : btn.classList.contains('g-card') ? -8 : 0;
+
+                btn.addEventListener('mouseenter', () => gsap.to(btn, { y: baseHoverY, duration: .3, overwrite: true, ease: 'power2.out' }));
+
                 btn.addEventListener('mousemove', e => {
                     const r = btn.getBoundingClientRect();
                     const x = ((e.clientX - r.left) / r.width - .5) * 16;
                     const y = ((e.clientY - r.top) / r.height - .5) * 16;
-                    gsap.to(btn, { x, y, duration: .25, overwrite: true, ease: 'power2.out' });
+                    gsap.to(btn, { x, y: baseHoverY + y, duration: .25, overwrite: true, ease: 'power2.out' });
                 });
-                btn.addEventListener('mouseleave', () => gsap.to(btn, { x: 0, y: 0, duration: .55, ease: 'elastic.out(1,.45)' }));
+
+                btn.addEventListener('mouseleave', () => gsap.to(btn, {
+                    x: 0,
+                    y: 0,
+                    duration: .25,
+                    overwrite: true,
+                    ease: 'power3.out',
+                    clearProps: 'transform'
+                }));
             });
 
             form.addEventListener('submit', e => {
