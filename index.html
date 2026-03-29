@@ -17,11 +17,11 @@
             --panel: rgba(255, 255, 255, 0.88);
             --line: rgba(6, 44, 35, 0.08);
             --line2: rgba(6, 44, 35, 0.16);
-            --text: #062c23; /* Deep Emerald */
-            --muted: #4a6b62;
-            --green: #1a8e5f;
+            --text: #011B15; /* Sắc thẫm nhất cho Heading */
+            --muted: #324B44; /* Sắc thẫm vừa phải cho Body */
+            --green: #198C5D;
             --blue: #2d9d9b;
-            --gold: #d4a017; /* Metallic Gold */
+            --gold: #d4a017;
             --danger: #c54e4e;
             --shadow: 0 32px 80px rgba(6, 44, 35, 0.08);
             --ease: cubic-bezier(.22,1,.36,1);
@@ -31,14 +31,15 @@
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Be Vietnam Pro', sans-serif;
-            color: var(--text);
+            color: var(--muted);
             background:
                 radial-gradient(circle at 12% 14%, rgba(45, 157, 155, 0.1), transparent 35%),
                 radial-gradient(circle at 84% 12%, rgba(26, 142, 95, 0.08), transparent 40%),
                 linear-gradient(180deg, #f8fdfc 0%, #f2faf8 45%, #ecf7f4 100%);
             min-height: 100vh;
             overflow-x: hidden;
-            line-height: 1.75; /* Improved readability */
+            line-height: 1.8; /* Tăng khoảng cách dòng để dễ đọc hơn */
+            -webkit-font-smoothing: antialiased;
         }
         body::before {
             content: "";
@@ -89,13 +90,17 @@
         .btn.magnetic { transition: box-shadow .35s ease, border-color .35s ease, background .35s ease !important; }
         .eyebrow { display: inline-flex; align-items: center; gap: .65rem; color: var(--green); font-size: .82rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
         .eyebrow::before { content: ""; width: 38px; height: 1px; background: linear-gradient(90deg, var(--green), transparent); }
-        h1, h2, .display { 
+        h1, h2, h3, .display { 
             font-family: 'Bodoni Moda', serif; 
             line-height: 1.1; 
             letter-spacing: -0.02em; 
-            font-weight: 700;
+            font-weight: 800;
+            color: var(--text); /* Heading màu thẫm nhất */
         }
-        h2 { font-size: clamp(2.8rem, 5vw, 4.2rem); }
+        h1 { font-size: clamp(3.2rem, 8vw, 6.4rem); }
+        h2 { font-size: clamp(2.4rem, 6vw, 4.2rem); }
+        h3 { font-size: 1.4rem; font-weight: 700; color: var(--text); }
+        p { font-size: 1.125rem; color: var(--muted); }
         .js [data-r] { opacity: 0; transform: translateY(28px); }
         /* CSS_NAV */
         header {
@@ -153,9 +158,9 @@
         .hero::before { width: 20rem; height: 20rem; top: 5rem; left: -4rem; background: radial-gradient(circle, rgba(58,182,179,.16), transparent 72%); }
         .hero::after { width: 26rem; height: 26rem; right: -8rem; bottom: -6rem; background: radial-gradient(circle, rgba(42,163,107,.14), transparent 72%); }
         .hero-grid { display: grid; grid-template-columns: minmax(0,1.05fr) minmax(0,.95fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; }
-        .hero h1 { font-size: clamp(3.6rem, 8vw, 7rem); max-width: 10ch; text-wrap: balance; }
-        .grad { background: linear-gradient(135deg, #bbf5aa, #67e6ff 50%, #ffe08d); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .hero p.lead { margin-top: 1.5rem; max-width: 36rem; font-size: 1.05rem; color: var(--muted); }
+        .hero h1 { font-size: clamp(3rem, 8vw, 6.2rem); max-width: 12ch; text-wrap: balance; }
+        .grad { background: linear-gradient(135deg, var(--green), var(--blue)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .hero p.lead { margin-top: 1.5rem; max-width: 32rem; font-size: 1.125rem; color: var(--muted); line-height: 1.8; }
         .hero-actions { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 2rem; }
         .metrics { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1rem; margin-top: 2.2rem; }
         .metric {
@@ -218,8 +223,8 @@
         main { position: relative; z-index: 2; }
         section { position: relative; padding: clamp(5.3rem, 8vw, 8rem) 0; }
         .intro { display: flex; align-items: end; justify-content: space-between; gap: 2rem; margin-bottom: 2.4rem; }
-        .intro h2 { font-size: clamp(2.7rem, 6vw, 4.8rem); max-width: 8ch; }
-        .intro p { max-width: 35rem; color: var(--muted); font-size: 1rem; }
+        .intro h2 { font-size: clamp(2.4rem, 6vw, 4.2rem); max-width: 12ch; }
+        .intro p { max-width: 34rem; color: var(--muted); font-size: 1.125rem; }
         .cards3, .proofs, .solutions { display: grid; gap: 1.25rem; }
         .cards3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
         .proofs, .solutions { grid-template-columns: repeat(2, minmax(0,1fr)); }
@@ -459,11 +464,11 @@
             <a class="brand" href="#hero">TRẠM XANH</a>
             <nav aria-label="Điều hướng chính">
                 <ul class="menu" id="menu">
-                    <li><a class="active" href="#hero">Mở đầu</a></li>
-                    <li><a href="#air">Phổi xanh</a></li>
-                    <li><a href="#water">Nguồn sống</a></li>
-                    <li><a href="#soil">Đất mẹ</a></li>
-                    <li><a href="#solutions">Giải pháp</a></li>
+                    <li><a class="active" href="#hero">Trang chủ</a></li>
+                    <li><a href="#air">Không khí</a></li>
+                    <li><a href="#water">Nguồn nước</a></li>
+                    <li><a href="#soil">Mảnh đất</a></li>
+                    <li><a href="#solutions">Cách đổi quà</a></li>
                 </ul>
             </nav>
             <div class="head-actions">
@@ -478,27 +483,27 @@
         <section class="hero" id="hero">
             <div class="wrap hero-grid">
                 <div>
-                    <span class="eyebrow">Hành trình tái sinh môi trường</span>
-                    <h1>Biến cảnh báo thành <span class="grad">chuyển động xanh</span></h1>
+                    <span class="eyebrow">Hành trình hồi sinh màu xanh</span>
+                    <h1>Gom rác cũ, <span class="grad">đổi lấy mầm xanh.</span></h1>
                     <p class="lead">
-                        Trạm Xanh kể câu chuyện về ô nhiễm đất, nước và không khí bằng giao diện giàu hiệu ứng, nhiều hover state rõ ràng và các dẫn chứng đủ mạnh để người xem dừng lại, đọc và hành động.
+                        Mang 1kg nhựa hoặc 5 viên pin cũ đến Trạm Xanh để nhận ngay 1 chậu cây. Hành động nhỏ của bạn chính là sự khởi đầu cho một hành tinh khỏe mạnh.
                     </p>
                     <div class="hero-actions">
-                        <a class="btn primary magnetic" href="#solutions"><i class="ph-bold ph-leaf"></i>Khám phá giải pháp</a>
-                        <a class="btn secondary magnetic" href="#issues"><i class="ph-bold ph-arrow-down"></i>Xem ba điểm nóng</a>
+                        <a class="btn primary magnetic" href="#solutions"><i class="ph-bold ph-leaf"></i>Bắt đầu đổi đồ ngay</a>
+                        <a class="btn secondary magnetic" href="#issues"><i class="ph-bold ph-arrow-down"></i>Tìm hiểu vấn đề</a>
                     </div>
                     <div class="metrics">
                         <article class="metric tilt">
-                            <strong class="count" data-to="800" data-suf="M">0</strong>
-                            <span>trẻ em có nồng độ chì trong máu ở mức cần can thiệp</span>
-                        </article>
-                        <article class="metric tilt">
-                            <strong class="count" data-to="2.1" data-dec="1" data-suf="B">0</strong>
-                            <span>người chưa có nước uống được quản lý an toàn</span>
-                        </article>
-                        <article class="metric tilt">
                             <strong class="count" data-to="99" data-suf="%">0</strong>
-                            <span>dân số thế giới hít thở không khí vượt chuẩn WHO</span>
+                            <span>Dân số thế giới hít thở không khí bẩn</span>
+                        </article>
+                        <article class="metric tilt">
+                            <strong class="count" data-to="8" data-suf="M">0</strong>
+                            <span>Tấn nhựa đổ vào đại dương mỗi năm</span>
+                        </article>
+                        <article class="metric tilt">
+                            <strong class="count" data-to="33" data-suf="%">0</strong>
+                            <span>Diện tích đất toàn cầu đã suy thoái</span>
                         </article>
                     </div>
                 </div>
@@ -515,28 +520,28 @@
                     </div>
 
                     <article class="badge b1 float">
-                        <em>Đất</em>
-                        <h3>Đất nhiễm chì và rác điện tử</h3>
-                        <p>Kim loại nặng đi vào đất, bụi và chuỗi thực phẩm từ pin, sơn cũ và tái chế không an toàn.</p>
+                        <em>Chì & Rác thải</em>
+                        <h3>Ô nhiễm đất</h3>
+                        <p>Pin cũ và thiết bị điện tử hỏng đang "đầu độc" nguồn thực phẩm của chúng ta.</p>
                     </article>
 
                     <article class="badge b2 float">
-                        <em>Nước</em>
-                        <h3>Nước bẩn kéo theo bệnh tật</h3>
-                        <p>Nước uống không an toàn và vệ sinh kém tiếp tục tác động trực tiếp tới sức khỏe cộng đồng.</p>
+                        <em>Nhựa & Hóa chất</em>
+                        <h3>Ô nhiễm nước</h3>
+                        <p>80% nước thải chưa qua xử lý đang đổ trực tiếp ra sông ngòi mỗi ngày.</p>
                     </article>
 
                     <article class="badge b3 float">
-                        <em>Không khí</em>
-                        <h3>Bụi mịn bao phủ thành phố</h3>
-                        <p>PM2.5, khí thải giao thông và công nghiệp đang che mờ ranh giới giữa phát triển và trả giá.</p>
+                        <em>Bụi mịn PM2.5</em>
+                        <h3>Ô nhiễm khí</h3>
+                        <p>99% chúng ta đang hít thở bầu không khí vượt ngưỡng an toàn của WHO.</p>
                     </article>
 
                     <div class="note">
                         <span class="dot" aria-hidden="true"></span>
                         <div>
-                            <strong>Trang đã được làm lại mạnh tay</strong>
-                            <p>GSAP, ScrollTrigger và VanillaTilt đang điều khiển reveal, hover, tilt và các chuyển động tương tác chính của trang.</p>
+                            <strong>Bạn có rác nhựa hoặc pin cũ?</strong>
+                            <p>Đừng vứt chúng vào thùng rác chung. Hãy mang đến Trạm Xanh để đổi lấy những chậu cây mầm sống.</p>
                         </div>
                     </div>
                 </div>
@@ -547,11 +552,11 @@
             <div class="wrap">
                 <div class="intro">
                     <div>
-                        <span class="eyebrow" data-r>Hơi thở của đô thị</span>
-                        <h2 data-r>Không khí bẩn: Sát thủ thầm lặng.</h2>
+                        <span class="eyebrow" data-r>Phổi xanh đang nghẹt thở</span>
+                        <h2 data-r>99% chúng ta đang hít thở bụi mịn.</h2>
                     </div>
                     <p data-r>
-                        99% dân số thế giới đang hít thở bầu không khí vượt ngưỡng an toàn của WHO. Bụi mịn PM2.5 len lỏi vào từng phế nang, mạch máu, gây ra hàng triệu ca tử vong sớm mỗi năm.
+                        Bụi mịn PM2.5 không chỉ làm bầu trời xám xịt, chúng thầm lặng tấn công phổi và hệ tuần hoàn của bạn sau mỗi nhịp thở. Đây là một sát thủ vô hình.
                     </p>
                 </div>
 
@@ -560,10 +565,10 @@
                         <img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1200&q=80" alt="Bụi mịn đô thị">
                         <div class="g-content">
                             <h4>Bụi mịn PM2.5</h4>
-                            <p>Kẻ thù vô hình có thể xuyên qua khẩu trang thông thường, đi thẳng vào phổi và hệ tuần hoàn.</p>
+                            <p>Xuyên qua mọi lớp khẩu trang thông thường, đi thẳng vào máu và tàn phá các cơ quan nội tạng.</p>
                             <div class="g-stat">
-                                <div><strong>99%</strong><span>Dân số bị ảnh hưởng</span></div>
-                                <div><strong>7M</strong><span>Ca tử vong/năm</span></div>
+                                <div><strong>8.1M</strong><span>Tử vong sớm/năm</span></div>
+                                <div><strong>< 2.5</strong><span>Kích thước (μm)</span></div>
                             </div>
                         </div>
                     </div>
@@ -571,7 +576,7 @@
                         <img src="https://images.unsplash.com/photo-1611273233597-993472bf5952?auto=format&fit=crop&w=1200&q=80" alt="Khí thải giao thông">
                         <div class="g-content">
                             <h4>Khí thải Giao thông</h4>
-                            <p>Nguồn phát thải NO2 và CO lớn nhất tại các đô thị, làm gia tăng các bệnh hô hấp mãn tính.</p>
+                            <p>Nguồn phát thải Nitơ Dioxit (NO2) lớn nhất tại đô thị, nguyên nhân chính của các bệnh hen suyễn mãn tính.</p>
                             <div class="g-stat">
                                 <div><strong>40%</strong><span>Trong nội đô</span></div>
                                 <div><strong>NO₂</strong><span>Khí độc chính</span></div>
@@ -597,11 +602,11 @@
             <div class="wrap">
                 <div class="intro">
                     <div>
-                        <span class="eyebrow" data-r>Mạch sống mong manh</span>
-                        <h2 data-r>Dòng chảy bị đầu độc.</h2>
+                        <span class="eyebrow" data-r>Dòng chảy đang cạn kiệt</span>
+                        <h2 data-r>8 triệu tấn nhựa đổ vào biển mỗi năm.</h2>
                     </div>
                     <p data-r>
-                        Khi nước thải không được xử lý đúng cách, nó biến nguồn tài nguyên quý giá nhất thành gánh nặng bệnh tật. Hàng tỷ người vẫn đang thiếu nước uống an toàn mỗi ngày.
+                        Đại dương không còn là nơi trú ẩn an toàn của sinh vật biển. Rác nhựa không biến mất, chúng phân rã thành vi nhựa và quay lại bàn ăn của chính con người.
                     </p>
                 </div>
 
@@ -609,11 +614,11 @@
                     <div class="g-card">
                         <img src="https://images.unsplash.com/photo-1473773508845-188df298d2d1?auto=format&fit=crop&w=1200&q=80" alt="Nước thải công nghiệp">
                         <div class="g-content">
-                            <h4>Nước thải Công nghiệp</h4>
-                            <p>Kim loại nặng và hóa chất đi thẳng vào sông ngòi, giết chết hệ sinh thái thủy sinh và ngấm vào nông sản.</p>
+                            <h4>Hóa chất độc hại</h4>
+                            <p>80% nước thải thế giới đổ ra sông biển mà chưa qua bất kỳ quy trình xử lý an toàn nào.</p>
                             <div class="g-stat">
-                                <div><strong>80%</strong><span>Nước thải chưa xử lý</span></div>
-                                <div><strong>Hg, Pb</strong><span>Chất độc chính</span></div>
+                                <div><strong>80%</strong><span>Chưa qua xử lý</span></div>
+                                <div><strong>Hg, Pb</strong><span>Kim loại nặng</span></div>
                             </div>
                         </div>
                     </div>
@@ -621,9 +626,9 @@
                         <img src="https://images.unsplash.com/photo-1532601224476-15c79f2f7a51?auto=format&fit=crop&w=1200&q=80" alt="Rác thải nhựa đại dương">
                         <div class="g-content">
                             <h4>Vi nhựa & Rác thải</h4>
-                            <p>Đại dương đang trở thành "bãi rác" khổng lồ, nơi nhựa phân rã thành vi nhựa và quay lại chuỗi thức ăn con người.</p>
+                            <p>Mỗi phút trôi qua, một xe tải rác nhựa được trút xuống biển. Nhựa cần từ 100 đến 1000 năm để phân hủy.</p>
                             <div class="g-stat">
-                                <div><strong>8M</strong><span>Tấn nhựa/năm</span></div>
+                                <div><strong>8 triệu</strong><span>Tấn nhựa/năm</span></div>
                                 <div><strong>1000y</strong><span>Thời gian phân hủy</span></div>
                             </div>
                         </div>
@@ -647,11 +652,11 @@
             <div class="wrap">
                 <div class="intro">
                     <div>
-                        <span class="eyebrow" data-r>Nền tảng suy kiệt</span>
-                        <h2 data-r>Đất mẹ đang "ngạt thở".</h2>
+                        <span class="eyebrow" data-r>Đất lành nứt nẻ</span>
+                        <h2 data-r>1/3 diện tích đất toàn cầu đã suy thoái.</h2>
                     </div>
                     <p data-r>
-                        Đất không chỉ là nơi ta đứng, mà là nơi nuôi dưỡng sự sống. Ô nhiễm đất từ rác điện tử và hóa chất nông nghiệp đang làm suy thoái đa dạng sinh học từ gốc rễ.
+                        Đất không chỉ là nơi ta đứng, đó là nguồn nuôi dưỡng thực phẩm. Việc lạm dụng hóa chất và rác thải điện tử đang đầu độc chính nguồn sống của chúng ta.
                     </p>
                 </div>
 
@@ -659,21 +664,21 @@
                     <div class="g-card">
                         <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb773b09?auto=format&fit=crop&w=1200&q=80" alt="Rác thải điện tử">
                         <div class="g-content">
-                            <h4>Rác thải Điện tử</h4>
-                            <p>Pin, linh kiện cũ giải phóng chì và cadmium vào đất, đe dọa trực tiếp đến nồng độ kim loại nặng trong máu trẻ em.</p>
+                            <h4>Nhiễm độc từ Rác điện tử</h4>
+                            <p>Pin và linh kiện cũ giải phóng Chì, Thủy ngân vào lòng đất, theo mạch nước ngầm đi vào thực phẩm chúng ta ăn hàng ngày.</p>
                             <div class="g-stat">
-                                <div><strong>800M</strong><span>Trẻ em bị phơi nhiễm</span></div>
-                                <div><strong>Cd, Pb</strong><span>Tác nhân chính</span></div>
+                                <div><strong>800M</strong><span>Người bị ảnh hưởng</span></div>
+                                <div><strong>Cd, Pb</strong><span>Kim loại nặng</span></div>
                             </div>
                         </div>
                     </div>
                     <div class="g-card magnetic">
                         <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80" alt="Đất nông nghiệp suy thoái">
                         <div class="g-content">
-                            <h4>Lạm dụng Hóa chất</h4>
-                            <p>Thuốc trừ sâu và phân bón hóa học làm đất chai cứng, tiêu diệt vi sinh vật có lợi và làm bẩn mạch nước ngầm.</p>
+                            <h4>Lạm dụng Phân bón</h4>
+                            <p>Hóa chất làm đất chai cứng, tiêu diệt vi sinh vật có lợi và khiến mảnh đất không còn khả năng tự hồi phục.</p>
                             <div class="g-stat">
-                                <div><strong>33%</strong><span>Diện tích đất suy thoái</span></div>
+                                <div><strong>33%</strong><span>Mất khả năng canh tác</span></div>
                                 <div><strong>Cu, Zn</strong><span>Dư lượng cao</span></div>
                             </div>
                         </div>
@@ -697,41 +702,38 @@
             <div class="wrap">
                 <div class="intro">
                     <div>
-                        <span class="eyebrow" data-r>Giải pháp</span>
-                        <h2 data-r>Biến cảm xúc thành hành động cụ thể.</h2>
+                        <span class="eyebrow" data-r>Hành động ngay hôm nay</span>
+                        <h2 data-r>3 bước để hồi sinh màu xanh.</h2>
                     </div>
                     <p data-r>
-                        Sau phần cảnh báo và dẫn chứng, trang cần trả lời câu hỏi quan trọng nhất: người xem phải làm gì tiếp theo. Phần này chuyển landing page từ “đẹp để xem” thành “đủ thuyết phục để tham gia”.
+                        Đừng chỉ đứng nhìn. Trạm Xanh giúp bạn biến những vật dụng bỏ đi thành những mầm sống mới chỉ với vài thao tác đơn giản tại các điểm thu gom.
                     </p>
                 </div>
 
                 <div class="solutions">
                     <article class="panel" data-r>
-                        <h3>Trạm Xanh hoạt động như một điểm đổi rác lấy giá trị xanh.</h3>
-                        <p>Mô hình phù hợp với nội dung trang: thu gom vật liệu tái chế, hướng dẫn phân loại đúng, đổi lấy cây giống hoặc điểm thưởng, rồi kể lại tác động qua dữ liệu trực quan.</p>
+                        <h3>Quy trình đổi rác lấy cây</h3>
+                        <p>Chúng tôi tiếp nhận đa dạng các loại rác thải khó phân hủy và quy đổi thành những món quà xanh ý nghĩa dành cho bạn.</p>
                         <div class="stack">
-                            <div class="item"><i class="ph-bold ph-recycle"></i><div><strong>Thu gom đúng nhóm rác</strong><span>Nhựa, giấy, pin cũ và rác điện tử được tách riêng ngay từ đầu.</span></div><i class="ph-bold ph-arrow-right go"></i></div>
-                            <div class="item"><i class="ph-bold ph-scan"></i><div><strong>Gắn nhãn nguồn phát sinh</strong><span>Nhìn rõ rác đến từ trường học, gia đình, cửa hàng hay doanh nghiệp.</span></div><i class="ph-bold ph-arrow-right go"></i></div>
-                            <div class="item"><i class="ph-bold ph-plant"></i><div><strong>Đổi lấy cây giống hoặc quà xanh</strong><span>Tạo phần thưởng hữu hình để hành động môi trường trở nên gần gũi hơn.</span></div><i class="ph-bold ph-arrow-right go"></i></div>
-                            <div class="item"><i class="ph-bold ph-chart-line-up"></i><div><strong>Kể lại tác động bằng dashboard</strong><span>Người tham gia nhìn thấy tiến độ thay vì gửi đồ rồi quên mất.</span></div><i class="ph-bold ph-arrow-right go"></i></div>
+                            <div class="item"><i class="ph-bold ph-recycle"></i><div><strong>Phân loại rác tại nhà</strong><span>Tách riêng nhựa, giấy và đặc biệt là pin cũ, đồ điện tử hỏng.</span></div><i class="ph-bold ph-arrow-right go"></i></div>
+                            <div class="item"><i class="ph-bold ph-map-pin"></i><div><strong>Đến Trạm Xanh gần nhất</strong><span>Mang rác đã phân loại đến các điểm tiếp nhận của chúng tôi.</span></div><i class="ph-bold ph-arrow-right go"></i></div>
+                            <div class="item"><i class="ph-bold ph-plant"></i><div><strong>Nhận cây xanh & Quà tặng</strong><span>Nhận ngay chậu cây hoặc hạt giống sau khi xác nhận khối lượng rác.</span></div><i class="ph-bold ph-arrow-right go"></i></div>
+                            <div class="item"><i class="ph-bold ph-chart-line-up"></i><div><strong>Theo dõi tác động</strong><span>Xem trực tiếp lượng rác bạn đã giúp tái chế qua hệ thống Dashboard.</span></div><i class="ph-bold ph-arrow-right go"></i></div>
                         </div>
                     </article>
 
                     <article class="panel" data-r>
-                        <h3>Thiết kế phần hành động đã được đẩy lên một cấp độ rõ ràng hơn.</h3>
-                        <p>Các ô dữ liệu dưới đây không giả làm báo cáo thật, mà đóng vai trò như một bảng điều khiển truyền thông để người xem hiểu trang đang ưu tiên điều gì.</p>
+                        <h3>Tác động cộng hưởng</h3>
+                        <p>Mỗi hành động nhỏ của cá nhân khi kết hợp lại sẽ tạo nên một làn sóng thay đổi mạnh mẽ cho môi trường đô thị.</p>
                         <div class="dash">
-                            <div class="tile"><small>Mục tiêu</small><strong class="count" data-to="3">0</strong><div class="bar"><div class="fill" style="--w:92%"></div></div></div>
-                            <div class="tile"><small>Phân loại trước xử lý</small><strong class="count" data-to="100" data-suf="%">0</strong><div class="bar"><div class="fill" style="--w:100%"></div></div></div>
-                            <div class="tile"><small>Thói quen mỗi tuần</small><strong class="count" data-to="1">0</strong><div class="bar"><div class="fill" style="--w:72%"></div></div></div>
-                            <div class="tile"><small>Lý do trì hoãn</small><strong class="count" data-to="0">0</strong><div class="bar"><div class="fill" style="--w:18%"></div></div></div>
+                            <div class="tile"><small>Cây đã trồng</small><strong class="count" data-to="5200">0</strong><div class="bar"><div class="fill" style="--w:85%"></div></div></div>
+                            <div class="tile"><small>Rác đã tái chế</small><strong class="count" data-to="12" data-suf="T">0</strong><div class="bar"><div class="fill" style="--w:70%"></div></div></div>
                         </div>
                         <div class="steps">
-                            <div class="item"><div class="n">1</div><div><strong>Mang vật liệu sạch đến điểm thu gom</strong><span>Chụp ảnh, cân ký và xác nhận loại vật liệu ngay tại quầy.</span></div></div>
-                            <div class="item"><div class="n">2</div><div><strong>Nhận cây, điểm thưởng hoặc tài liệu hướng dẫn</strong><span>Phần thưởng tạo vòng lặp tích cực thay vì chỉ kêu gọi bằng khẩu hiệu.</span></div></div>
-                            <div class="item"><div class="n">3</div><div><strong>Theo dõi tác động sau mỗi đợt thu gom</strong><span>Biết lượng rác được chuyển đi đâu và loại nào cần giảm từ gốc.</span></div></div>
+                            <div class="item"><div class="n">1</div><div><strong>Sạch sẽ & Khô ráo</strong><span>Đảm bảo rác nhựa được rửa sạch và để khô trước khi mang đến trạm.</span></div></div>
+                            <div class="item"><div class="n">2</div><div><strong>An toàn là trên hết</strong><span>Để pin cũ vào lọ thủy tinh hoặc túi kín để tránh rò rỉ hóa chất.</span></div></div>
+                            <div class="item"><div class="n">3</div><div><strong>Lan tỏa niềm cảm hứng</strong><span>Chụp ảnh chậu cây mới của bạn và chia sẻ để cùng nhau sống xanh hơn.</span></div></div>
                         </div>
-                        <div class="quote">Một landing page môi trường đẹp là chưa đủ. Nó phải khiến người xem hiểu vấn đề, nhớ con số và biết bước tiếp theo của mình.</div>
                     </article>
                 </div>
             </div>
@@ -742,18 +744,18 @@
                 <div class="cta" data-r>
                     <div class="ctagrid">
                         <div>
-                            <span class="eyebrow">Kết nối ngay</span>
-                            <h2>Viết tiếp câu chuyện của Trạm Xanh.</h2>
-                            <p>Để lại email để nhận thông tin về điểm thu gom mới, tài liệu truyền thông ngắn gọn và các cập nhật nội dung nếu bạn muốn mở rộng landing page này thành một chiến dịch hoàn chỉnh.</p>
+                            <span class="eyebrow">Gia nhập trạm xanh</span>
+                            <h2>Sẵn sàng đổi rác lấy mầm xanh?</h2>
+                            <p>Để lại email để nhận bản đồ điểm Trạm Xanh gần nhất và hướng dẫn phân loại rác tại nhà đơn giản, hiệu quả.</p>
                             <form class="mail" id="mail" novalidate>
-                                <input id="email" type="email" placeholder="Email của bạn" aria-label="Email của bạn" required>
-                                <button class="btn primary magnetic" type="submit"><i class="ph-bold ph-paper-plane-tilt"></i>Nhận cập nhật</button>
+                                <input id="email" type="email" placeholder="Nhập địa chỉ email của bạn..." aria-label="Email của bạn" required>
+                                <button class="btn primary magnetic" type="submit"><i class="ph-bold ph-paper-plane-tilt"></i>Gửi cho tôi ngay</button>
                             </form>
                         </div>
                         <div class="chips">
-                            <article class="chip"><small>Tập trung</small><strong>Đất</strong><span>Chì, rác điện tử, phân loại chất thải.</span></article>
-                            <article class="chip"><small>Tập trung</small><strong>Nước</strong><span>Nước uống an toàn, vệ sinh và xử lý dòng thải.</span></article>
-                            <article class="chip"><small>Tập trung</small><strong>Không khí</strong><span>Bụi mịn, khí thải và hô hấp cộng đồng.</span></article>
+                            <article class="chip"><small>Hành động</small><strong>Gom rác</strong><span>Nhựa, giấy, pin & điện tử.</span></article>
+                            <article class="chip"><small>Phần thưởng</small><strong>Nhận cây</strong><span>Sen đá, mầm cây & hạt giống.</span></article>
+                            <article class="chip"><small>Theo dõi</small><strong>Dữ liệu</strong><span>Dashboard tác động cá nhân.</span></article>
                         </div>
                     </div>
                 </div>
@@ -791,16 +793,6 @@
             const form = document.getElementById('mail');
             const email = document.getElementById('email');
             document.getElementById('year').textContent = new Date().getFullYear();
-
-            const noteTitle = document.querySelector('.note strong');
-            const noteText = document.querySelector('.note p');
-            if (noteTitle) noteTitle.textContent = 'Th\u00f4ng \u0111i\u1ec7p r\u00f5 h\u01a1n, tr\u1ea3i nghi\u1ec7m nh\u1eb9 h\u01a1n';
-            if (noteText) noteText.textContent = 'Ph\u1ea7n m\u1edf \u0111\u1ea7u gi\u1edd t\u1eadp trung v\u00e0o \u0111i\u1ec1u ng\u01b0\u1eddi xem c\u1ea7n hi\u1ec3u ngay: \u00f4 nhi\u1ec5m \u0111ang ch\u1ea1m t\u1edbi \u0111\u1ea5t, n\u01b0\u1edbc v\u00e0 kh\u00f4ng kh\u00ed c\u00f9ng l\u00fac.';
-
-            const sectionIntroText = (sectionId, text) => {
-                const node = document.querySelector(`#${sectionId} .intro p`);
-                if (node) node.textContent = text;
-            };
 
             const paintTop = (scroll, limit) => {
                 topbar.classList.toggle('scrolled', scroll > 40);
