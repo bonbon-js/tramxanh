@@ -414,6 +414,179 @@
             .g-card h4 { font-size: 1.6rem; }
         }
 
+        /* CSS_SPECIES_SLIDER - CINEMATIC CAROUSEL */
+        #species { background: #000; padding: 0; margin-top: 4rem; }
+        
+        .carousel {
+            height: 100vh;
+            min-height: 700px;
+            width: 100vw;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .carousel .list .item {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            inset: 0;
+        }
+        
+        .carousel .list .item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7);
+        }
+        
+        .carousel .list .item .content {
+            position: absolute;
+            top: 20%;
+            width: 1140px;
+            max-width: 90%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding-right: 30%;
+            box-sizing: border-box;
+            color: #fff;
+            text-shadow: 0 5px 10px #0004;
+        }
+        
+        .carousel .list .item .author { font-weight: bold; letter-spacing: 10px; color: var(--green); text-transform: uppercase; }
+        .carousel .list .item .title,
+        .carousel .list .item .topic {
+            font-family: 'Bodoni Moda', serif;
+            font-size: clamp(3rem, 6vw, 5em);
+            font-weight: bold;
+            line-height: 1.1em;
+        }
+        .carousel .list .item .topic { color: var(--green); }
+        .carousel .list .item .des {
+            margin-top: 20px;
+            font-size: 1.125rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        /* THUMBNAIL CSS */
+        .thumbnail {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            width: max-content;
+            z-index: 100;
+            display: flex;
+            gap: 20px;
+        }
+        
+        .thumbnail .item {
+            width: 150px;
+            height: 220px;
+            flex-shrink: 0;
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .thumbnail .item:hover { transform: translateY(-5px); }
+        .thumbnail .item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .thumbnail .item .content {
+            color: #fff;
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            z-index: 1;
+        }
+        .thumbnail .item::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,0,0,0.8), transparent 60%); }
+        .thumbnail .item .title { font-weight: bold; position: relative; z-index: 2; font-size: 0.9rem; line-height: 1.2; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+        .thumbnail .item .description { font-weight: 300; position: relative; z-index: 2; font-size: 0.75rem; }
+        
+        /* ARROWS */
+        .arrows {
+            position: absolute;
+            top: 50%;
+            left: 3%;
+            right: 3%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .arrows button {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.4);
+            backdrop-filter: blur(5px);
+            color: #fff;
+            font-family: monospace;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: .3s;
+            cursor: pointer;
+        }
+        .arrows button:hover { background-color: #fff; color: #000; }
+        
+        /* ANIMATIONS FOR CAROUSEL */
+        .carousel .list .item:nth-child(1) { z-index: 1; }
+        .carousel .list .item:nth-child(1) .content .author,
+        .carousel .list .item:nth-child(1) .content .title,
+        .carousel .list .item:nth-child(1) .content .topic,
+        .carousel .list .item:nth-child(1) .content .des {
+            transform: translateY(50px);
+            filter: blur(20px);
+            opacity: 0;
+            animation: showContent .5s 1s linear 1 forwards;
+        }
+        @keyframes showContent { to { transform: translateY(0px); filter: blur(0px); opacity: 1; } }
+        .carousel .list .item:nth-child(1) .content .title { animation-delay: 1.2s; }
+        .carousel .list .item:nth-child(1) .content .topic { animation-delay: 1.4s; }
+        .carousel .list .item:nth-child(1) .content .des { animation-delay: 1.6s; }
+        
+        /* EFFECT NEXT CLICK */
+        .carousel.next .list .item:nth-child(1) img { width: 150px; height: 220px; position: absolute; bottom: 50px; left: 50%; border-radius: 30px; animation: showImage .5s linear 1 forwards; }
+        @keyframes showImage { to { bottom: 0; left: 0; width: 100%; height: 100%; border-radius: 0; } }
+        .carousel.next .thumbnail .item:nth-last-child(1) { overflow: hidden; animation: showThumbnail .5s linear 1 forwards; }
+        @keyframes showThumbnail { from { width: 0; opacity: 0; } }
+        .carousel.next .thumbnail { animation: effectNext .5s linear 1 forwards; }
+        @keyframes effectNext { from { transform: translateX(150px); } }
+        
+        /* TIMEBAR */
+        .time { position: absolute; z-index: 100; width: 0%; height: 4px; background-color: var(--green); left: 0; top: 0; }
+        .carousel.next .time, .carousel.prev .time { animation: runningTime 3s linear 1 forwards; }
+        @keyframes runningTime { from { width: 100%; } to { width: 0; } }
+        
+        /* EFFECT PREV CLICK */
+        .carousel.prev .list .item:nth-child(2) { z-index: 2; }
+        .carousel.prev .list .item:nth-child(2) img { position: absolute; bottom: 0; left: 0; animation: outFrame 0.5s linear 1 forwards; }
+        @keyframes outFrame { to { width: 150px; height: 220px; bottom: 50px; left: 50%; border-radius: 20px; } }
+        .carousel.prev .thumbnail .item:nth-child(1) { overflow: hidden; opacity: 0; animation: showThumbnail .5s linear 1 forwards; }
+        .carousel.prev .list .item:nth-child(2) .content .author,
+        .carousel.prev .list .item:nth-child(2) .content .title,
+        .carousel.prev .list .item:nth-child(2) .content .topic,
+        .carousel.prev .list .item:nth-child(2) .content .des {
+            animation: contentOut 1.5s linear 1 forwards;
+        }
+        @keyframes contentOut { to { transform: translateY(-150px); filter: blur(20px); opacity: 0; } }
+        
+        @media screen and (max-width: 678px) {
+            .carousel .list .item .content { padding-right: 0; }
+            .carousel .list .item .title, .carousel .list .item .topic { font-size: 2rem; }
+            .thumbnail { left: 5%; bottom: 80px; }
+            .arrows { right: auto; left: 5%; bottom: 20px; top: auto; }
+        }
+
+
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(115,226,126,.5); } 70% { box-shadow: 0 0 0 14px rgba(115,226,126,0); } 100% { box-shadow: 0 0 0 0 rgba(115,226,126,0); } }
@@ -456,6 +629,79 @@
     </style>
 </head>
 <body>
+
+    <!-- LOADING SCREEN -->
+    <div id="loader" style="
+        position:fixed; inset:0; z-index:99999;
+        background: linear-gradient(135deg, #0a2e1f 0%, #0d3b28 40%, #072216 100%);
+        display:flex; flex-direction:column; align-items:center; justify-content:center;
+        transition: opacity 0.8s ease, visibility 0.8s ease;
+    ">
+        <style>
+            @keyframes heartbeat {
+                0%   { transform: scale(1); }
+                14%  { transform: scale(1.22); }
+                28%  { transform: scale(1); }
+                42%  { transform: scale(1.15); }
+                56%  { transform: scale(1); }
+                100% { transform: scale(1); }
+            }
+            @keyframes pulseglow {
+                0%, 100% { box-shadow: 0 0 0 0 rgba(25,140,93,0); }
+                40% { box-shadow: 0 0 0 30px rgba(25,140,93,0.18); }
+                80% { box-shadow: 0 0 0 60px rgba(25,140,93,0.04); }
+            }
+            @keyframes fadeUp {
+                from { opacity:0; transform: translateY(18px); }
+                to   { opacity:1; transform: translateY(0);    }
+            }
+            #loader-heart {
+                animation: heartbeat 1.2s ease-in-out infinite, pulseglow 1.2s ease-in-out infinite;
+                transform-origin: center;
+            }
+            #loader-logo { animation: fadeUp 0.7s 0.3s both ease-out; }
+            #loader-tagline { animation: fadeUp 0.7s 0.55s both ease-out; }
+            #loader-bar-wrap { animation: fadeUp 0.7s 0.75s both ease-out; }
+            #loader.hide { opacity:0; visibility:hidden; pointer-events:none; }
+        </style>
+
+        <!-- Heart SVG -->
+        <div id="loader-heart" style="margin-bottom:28px;">
+            <svg width="90" height="82" viewBox="0 0 90 82" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <radialGradient id="hg" cx="50%" cy="35%" r="65%">
+                        <stop offset="0%" stop-color="#4ade80"/>
+                        <stop offset="55%" stop-color="#198C5D"/>
+                        <stop offset="100%" stop-color="#0d5c38"/>
+                    </radialGradient>
+                    <filter id="glow">
+                        <feGaussianBlur stdDeviation="4" result="blur"/>
+                        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                    </filter>
+                </defs>
+                <path filter="url(#glow)" fill="url(#hg)" d="M45 76s-35-22.4-35-43C10 18.3 20.3 8 33 8c6.4 0 12.2 3 16 7.8C52.8 11 58.6 8 65 8c12.7 0 23 10.3 23 25C88 53.6 45 76 45 76z"/>
+                <!-- EKG line inside heart -->
+                <polyline points="22,42 30,42 33,35 37,50 41,38 45,42 48,42 51,36 55,48 59,42 68,42" stroke="rgba(255,255,255,0.65)" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+
+        <!-- Brand name -->
+        <div id="loader-logo" style="color:#4ade80; font-family:'Be Vietnam Pro',sans-serif; font-weight:800; font-size:2rem; letter-spacing:0.18em; text-transform:uppercase; margin-bottom:8px;">
+            TRẠM XANH
+        </div>
+
+        <!-- Tagline -->
+        <div id="loader-tagline" style="color:rgba(255,255,255,0.55); font-family:'Be Vietnam Pro',sans-serif; font-size:0.9rem; letter-spacing:0.08em; margin-bottom:36px;">
+            Hành trình hồi sinh màu xanh
+        </div>
+
+        <!-- Progress bar -->
+        <div id="loader-bar-wrap" style="width:180px; height:3px; background:rgba(255,255,255,0.12); border-radius:99px; overflow:hidden;">
+            <div id="loader-fill" style="height:100%; width:0%; background:linear-gradient(90deg,#4ade80,#198C5D); border-radius:99px; transition: width 0.05s linear;"></div>
+        </div>
+    </div>
+    <!-- END LOADING SCREEN -->
+
     <div class="cursor" id="cursor" aria-hidden="true"></div>
     <div class="progress" id="progress" aria-hidden="true"></div>
 
@@ -468,7 +714,8 @@
                     <li><a href="#air">Không khí</a></li>
                     <li><a href="#water">Nguồn nước</a></li>
                     <li><a href="#soil">Mảnh đất</a></li>
-                    <li><a href="#solutions">Cách đổi quà</a></li>
+                    <li><a href="#species">Tuyệt chủng</a></li>
+                    <li><a href="#cta">Cách đổi quà</a></li>
                 </ul>
             </nav>
             <div class="head-actions">
@@ -482,15 +729,15 @@
     <main>
         <section class="hero" id="hero">
             <div class="wrap hero-grid">
-                <div>
+                <div class="hero-content">
                     <span class="eyebrow">Hành trình hồi sinh màu xanh</span>
                     <h1>Gom rác cũ, <span class="grad">đổi lấy mầm xanh.</span></h1>
                     <p class="lead">
                         Mang 1kg nhựa hoặc 5 viên pin cũ đến Trạm Xanh để nhận ngay 1 chậu cây. Hành động nhỏ của bạn chính là sự khởi đầu cho một hành tinh khỏe mạnh.
                     </p>
                     <div class="hero-actions">
-                        <a class="btn primary magnetic" href="#solutions"><i class="ph-bold ph-leaf"></i>Bắt đầu đổi đồ ngay</a>
-                        <a class="btn secondary magnetic" href="#issues"><i class="ph-bold ph-arrow-down"></i>Tìm hiểu vấn đề</a>
+                        <a class="btn primary magnetic" href="#cta"><i class="ph-bold ph-leaf"></i>Bắt đầu đổi đồ ngay</a>
+                        <a class="btn secondary magnetic" href="#air"><i class="ph-bold ph-arrow-down"></i>Tìm hiểu vấn đề</a>
                     </div>
                     <div class="metrics">
                         <article class="metric tilt">
@@ -505,44 +752,6 @@
                             <strong class="count" data-to="33" data-suf="%">0</strong>
                             <span>Diện tích đất toàn cầu đã suy thoái</span>
                         </article>
-                    </div>
-                </div>
-
-                <div class="stage tilt" id="stage">
-                    <div class="globe float">
-                        <div class="core">
-                            <div>
-                                <span>Điểm nóng môi trường</span>
-                                <strong>3 mặt trận</strong>
-                                <small>Đất • Nước • Không khí</small>
-                            </div>
-                        </div>
-                    </div>
-
-                    <article class="badge b1 float">
-                        <em>Chì & Rác thải</em>
-                        <h3>Ô nhiễm đất</h3>
-                        <p>Pin cũ và thiết bị điện tử hỏng đang "đầu độc" nguồn thực phẩm của chúng ta.</p>
-                    </article>
-
-                    <article class="badge b2 float">
-                        <em>Nhựa & Hóa chất</em>
-                        <h3>Ô nhiễm nước</h3>
-                        <p>80% nước thải chưa qua xử lý đang đổ trực tiếp ra sông ngòi mỗi ngày.</p>
-                    </article>
-
-                    <article class="badge b3 float">
-                        <em>Bụi mịn PM2.5</em>
-                        <h3>Ô nhiễm khí</h3>
-                        <p>99% chúng ta đang hít thở bầu không khí vượt ngưỡng an toàn của WHO.</p>
-                    </article>
-
-                    <div class="note">
-                        <span class="dot" aria-hidden="true"></span>
-                        <div>
-                            <strong>Bạn có rác nhựa hoặc pin cũ?</strong>
-                            <p>Đừng vứt chúng vào thùng rác chung. Hãy mang đến Trạm Xanh để đổi lấy những chậu cây mầm sống.</p>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -695,6 +904,87 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <section id="species">
+            <div class="carousel">
+                <div class="list" id="spList">
+                    <!-- Item 1: Tê giác -->
+                    <div class="item">
+                        <img src="images/javan_rhino_extinction_1775136370674.png" alt="Tê giác một sừng">
+                        <div class="content">
+                            <div class="author">TUYỆT CHỦNG TẠI VN</div>
+                            <div class="title">TÊ GIÁC MỘT SỪNG</div>
+                            <div class="topic">BÓNG MA TRONG RỪNG</div>
+                            <div class="des">
+                                Năm 2010, cá thể tê giác một sừng Java cuối cùng tại Việt Nam bị tìm thấy đã chết do đạn súng và bị cắt mất sừng. Ô nhiễm môi trường, thu hẹp sinh cảnh rừng già cùng sự ngông cuồng của nạn buôn bán sừng đã khép lại cánh cửa sinh tồn của chúng mãi mãi.
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Item 2: Sao la -->
+                    <div class="item">
+                        <img src="images/saola_the_asian_unicorn_1775136412499.png" alt="Sao la">
+                        <div class="content">
+                            <div class="author">CỰC KỲ NGUY CẤP</div>
+                            <div class="title">SAO LA (SAOLA)</div>
+                            <div class="topic">KỲ LÂN TRƯỜNG SƠN</div>
+                            <div class="des">
+                                Là một trong những loài thú quý hiếm nhất thế giới. Ngôi nhà của Sao la sâu trong dãy Trường Sơn đang bị tàn phá nặng nề. Hàng trăm ngàn bẫy dây rập rình cướp đi sinh mệnh vốn đang vô cùng mong manh của chúng.
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Item 3: Vích -->
+                    <div class="item">
+                        <img src="images/hawksbill_turtle_ocean_plastic_1775136435557.png" alt="Vích">
+                        <div class="content">
+                            <div class="author">NẠN NHÂN CỦA NHỰA</div>
+                            <div class="title">RÙA BIỂN VÍCH</div>
+                            <div class="topic">CHIẾN BINH ĐẠI DƯƠNG</div>
+                            <div class="des">
+                                Mỗi ngày trôi qua đang có vô số rùa biển chết vì nuốt nhầm túi nilon do nhầm lẫn với sứa biển. Lượng vi nhựa đang dần thâm nhập và bóp nghẹt hệ sinh thái, biến đại dương trở thành những nghĩa địa rác tự nhiên.
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Item 4: Rẽ mỏ thìa -->
+                    <div class="item">
+                        <img src="images/spoon_billed_sandpiper_estuary_1775136498502.png" alt="Rẽ mỏ thìa">
+                        <div class="content">
+                            <div class="author">CỰC KỲ NGUY CẤP</div>
+                            <div class="title">RẼ MỎ THÌA</div>
+                            <div class="topic">KẺ DU HÀNH CÔ ĐỘC</div>
+                            <div class="des">
+                                Hành trình bay di cư hàng ngàn km vô cùng khắc nghiệt. Các bãi lầy và vùng đất ngập nước ven biển, trạm dừng chân sống còn của chúng, nay đã bị con người san lấp và xả đầy rác thải độc hại.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thumbs (starts from index 1, i.e., Saola -> Vích -> Rẽ Mỏ Thìa -> Tê giác) -->
+                <div class="thumbnail" id="spThumbs">
+                    <div class="item">
+                        <img src="images/saola_the_asian_unicorn_1775136412499.png" alt="Sao la">
+                        <div class="content"><div class="title">Sao la</div></div>
+                    </div>
+                    <div class="item">
+                        <img src="images/hawksbill_turtle_ocean_plastic_1775136435557.png" alt="Vích">
+                        <div class="content"><div class="title">Vích</div></div>
+                    </div>
+                    <div class="item">
+                        <img src="images/spoon_billed_sandpiper_estuary_1775136498502.png" alt="Rẽ mỏ thìa">
+                        <div class="content"><div class="title">Rẽ mỏ thìa</div></div>
+                    </div>
+                    <div class="item">
+                        <img src="images/javan_rhino_extinction_1775136370674.png" alt="Tê giác">
+                        <div class="content"><div class="title">Tê giác một sừng</div></div>
+                    </div>
+                </div>
+
+                <div class="arrows">
+                    <button id="prevCarousel"><</button>
+                    <button id="nextCarousel">></button>
+                </div>
+                <div class="time"></div>
             </div>
         </section>
 
@@ -919,7 +1209,73 @@
                 form.reset();
                 setTimeout(() => toast.classList.remove('show'), 3600);
             });
+
+            // Carousel Cinematic Logic
+            const nextDom = document.getElementById('nextCarousel');
+            const prevDom = document.getElementById('prevCarousel');
+            const carouselDom = document.querySelector('.carousel');
+            const spList = document.getElementById('spList');
+            const spThumbs = document.getElementById('spThumbs');
+            const timeDom = document.querySelector('.carousel .time');
+
+            let timeRunning = 3000;
+            let timeAutoNext = 7000;
+            let runTimeOut;
+            let runNextAuto = setTimeout(() => { if (nextDom) nextDom.click(); }, timeAutoNext);
+
+            if (nextDom && prevDom) {
+                nextDom.onclick = function() { showSlider('next'); }
+                prevDom.onclick = function() { showSlider('prev'); }
+
+                function showSlider(type) {
+                    let itemSlider = document.querySelectorAll('.carousel .list .item');
+                    let itemThumbnail = document.querySelectorAll('.carousel .thumbnail .item');
+                    
+                    if(type === 'next'){
+                        spList.appendChild(itemSlider[0]);
+                        spThumbs.appendChild(itemThumbnail[0]);
+                        carouselDom.classList.add('next');
+                    } else {
+                        spList.prepend(itemSlider[itemSlider.length - 1]);
+                        spThumbs.prepend(itemThumbnail[itemThumbnail.length - 1]);
+                        carouselDom.classList.add('prev');
+                    }
+                    
+                    clearTimeout(runTimeOut);
+                    runTimeOut = setTimeout(() => {
+                        carouselDom.classList.remove('next');
+                        carouselDom.classList.remove('prev');
+                    }, timeRunning);
+
+                    clearTimeout(runNextAuto);
+                    runNextAuto = setTimeout(() => { nextDom.click(); }, timeAutoNext);
+                }
+            }
         });
+
+        // ---- LOADING SCREEN LOGIC ----
+        const loader = document.getElementById('loader');
+        const loaderFill = document.getElementById('loader-fill');
+        let progress = 0;
+        const fillInterval = setInterval(() => {
+            progress += Math.random() * 18 + 4;
+            if (progress >= 95) { progress = 95; clearInterval(fillInterval); }
+            loaderFill.style.width = progress + '%';
+        }, 120);
+
+        const hideLoader = () => {
+            loaderFill.style.width = '100%';
+            loaderFill.style.transition = 'width 0.3s ease';
+            clearInterval(fillInterval);
+            setTimeout(() => { loader.classList.add('hide'); }, 350);
+        };
+
+        if (document.readyState === 'complete') {
+            setTimeout(hideLoader, 600);
+        } else {
+            window.addEventListener('load', () => setTimeout(hideLoader, 400));
+        }
+        // ---- END LOADING SCREEN ----
     </script>
 </body>
 </html>
