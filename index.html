@@ -121,10 +121,8 @@
             background: rgba(255,255,255,.88); border-color: rgba(51,98,86,.12); box-shadow: 0 18px 44px rgba(35,75,66,.12);
         }
         .brand { display: inline-flex; align-items: center; gap: .65rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
-        .brand::before {
-            content: ""; width: 10px; height: 10px; border-radius: 50%;
-            background: linear-gradient(135deg, var(--green), var(--blue)); box-shadow: 0 0 14px rgba(115,226,126,.45);
-        }
+        .brand::before { display: none; }
+        .brand img { height: 64px; width: auto; }
         nav { position: relative; }
         .menu {
             display: flex; align-items: center; justify-content: space-between; gap: 1rem; list-style: none;
@@ -136,12 +134,12 @@
             transition: color .3s ease, background .3s ease, transform .3s ease;
         }
         .menu a::after {
-            content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px;
+            content: ""; position: absolute; left: 25%; right: 25%; bottom: 0; height: 3px;
             border-radius: 999px; background: linear-gradient(90deg, var(--green), var(--blue));
-            transform: scaleX(0); transition: transform .3s ease;
+            opacity: 0; transition: opacity .3s ease, left .3s ease, right .3s ease;
         }
         .menu a:hover, .menu a.active { color: var(--text); background: rgba(255,255,255,.88); transform: translateY(-1px); }
-        .menu a:hover::after, .menu a.active::after { transform: scaleX(1); }
+        .menu a:hover::after, .menu a.active::after { opacity: 1; left: 20%; right: 20%; }
         .head-actions { display: flex; align-items: center; gap: .75rem; }
         .burger {
             display: none; width: 48px; height: 48px; place-items: center;
@@ -667,9 +665,8 @@
                 100% { transform: scale(1); }
             }
             @keyframes pulseglow {
-                0%, 100% { box-shadow: 0 0 0 0 rgba(25,140,93,0); }
-                40% { box-shadow: 0 0 0 30px rgba(25,140,93,0.18); }
-                80% { box-shadow: 0 0 0 60px rgba(25,140,93,0.04); }
+                0%, 100% { filter: drop-shadow(0 0 8px rgba(25,140,93,0.4)); }
+                50% { filter: drop-shadow(0 0 22px rgba(25,140,93,0.7)); }
             }
             @keyframes fadeUp {
                 from { opacity:0; transform: translateY(18px); }
@@ -706,8 +703,8 @@
         </div>
 
         <!-- Brand name -->
-        <div id="loader-logo" style="color:#4ade80; font-family:'Be Vietnam Pro',sans-serif; font-weight:800; font-size:2rem; letter-spacing:0.18em; text-transform:uppercase; margin-bottom:8px;">
-            TRẠM XANH
+        <div id="loader-logo" style="margin-bottom:8px;">
+            <img src="images/logo.png" alt="TRẠM XANH" style="height:100px; width:auto;">
         </div>
 
         <!-- Tagline -->
@@ -727,7 +724,7 @@
 
     <header id="topbar">
         <div class="navbox">
-            <a class="brand" href="#hero">TRẠM XANH</a>
+            <a class="brand" href="#hero"><img src="images/logo.png" alt="TRẠM XANH"></a>
             <nav aria-label="Điều hướng chính">
                 <ul class="menu" id="menu">
                     <li><a class="active" href="#hero">Trang chủ</a></li>
@@ -1029,10 +1026,10 @@
                         <h3>Quy trình đổi rác lấy cây</h3>
                         <p>Chúng tôi tiếp nhận đa dạng các loại rác thải khó phân hủy và quy đổi thành những món quà xanh ý nghĩa dành cho bạn.</p>
                         <div class="stack">
-                            <div class="item"><i class="ph-bold ph-recycle"></i><div><strong>Phân loại rác tại nhà</strong><span>Tách riêng nhựa, giấy và đặc biệt là pin cũ, đồ điện tử hỏng.</span></div><i class="ph-bold ph-arrow-right go"></i></div>
-                            <div class="item"><i class="ph-bold ph-map-pin"></i><div><strong>Đến Trạm Xanh gần nhất</strong><span>Mang rác đã phân loại đến các điểm tiếp nhận của chúng tôi.</span></div><i class="ph-bold ph-arrow-right go"></i></div>
-                            <div class="item"><i class="ph-bold ph-plant"></i><div><strong>Nhận cây xanh & Quà tặng</strong><span>Nhận ngay chậu cây hoặc hạt giống sau khi xác nhận khối lượng rác.</span></div><i class="ph-bold ph-arrow-right go"></i></div>
-                            <div class="item"><i class="ph-bold ph-chart-line-up"></i><div><strong>Theo dõi tác động</strong><span>Xem trực tiếp lượng rác bạn đã giúp tái chế qua hệ thống Dashboard.</span></div><i class="ph-bold ph-arrow-right go"></i></div>
+                            <div class="item"><i class="ph-bold ph-recycle"></i><div><strong>Phân loại rác tại nhà:</strong><span> Tách riêng nhựa, giấy và đặc biệt là pin cũ, đồ điện tử hỏng.</span></div><i class="ph-bold ph-arrow-right go"></i></div>
+                            <div class="item"><i class="ph-bold ph-map-pin"></i><div><strong>Đến Trạm Xanh gần nhất:</strong><span> Mang rác đã phân loại đến các điểm tiếp nhận của chúng tôi.</span></div><i class="ph-bold ph-arrow-right go"></i></div>
+                            <div class="item"><i class="ph-bold ph-plant"></i><div><strong>Nhận cây xanh & Quà tặng:</strong><span> Nhận ngay chậu cây hoặc hạt giống sau khi xác nhận khối lượng rác.</span></div><i class="ph-bold ph-arrow-right go"></i></div>
+                            <div class="item"><i class="ph-bold ph-chart-line-up"></i><div><strong>Theo dõi tác động:</strong><span> Xem trực tiếp lượng rác bạn đã giúp tái chế qua hệ thống Dashboard.</span></div><i class="ph-bold ph-arrow-right go"></i></div>
                         </div>
                     </article>
 
@@ -1044,9 +1041,9 @@
                             <div class="tile"><small>Rác đã tái chế</small><strong class="count" data-to="12" data-suf="T">0</strong><div class="bar"><div class="fill" style="--w:70%"></div></div></div>
                         </div>
                         <div class="steps">
-                            <div class="item"><div class="n">1</div><div><strong>Sạch sẽ & Khô ráo</strong><span>Đảm bảo rác nhựa được rửa sạch và để khô trước khi mang đến trạm.</span></div></div>
-                            <div class="item"><div class="n">2</div><div><strong>An toàn là trên hết</strong><span>Để pin cũ vào lọ thủy tinh hoặc túi kín để tránh rò rỉ hóa chất.</span></div></div>
-                            <div class="item"><div class="n">3</div><div><strong>Lan tỏa niềm cảm hứng</strong><span>Chụp ảnh chậu cây mới của bạn và chia sẻ để cùng nhau sống xanh hơn.</span></div></div>
+                            <div class="item"><div class="n">1</div><div><strong>Sạch sẽ & Khô ráo:</strong><span> Đảm bảo rác nhựa được rửa sạch và để khô trước khi mang đến trạm.</span></div></div>
+                            <div class="item"><div class="n">2</div><div><strong>An toàn là trên hết:</strong><span> Để pin cũ vào lọ thủy tinh hoặc túi kín để tránh rò rỉ hóa chất.</span></div></div>
+                            <div class="item"><div class="n">3</div><div><strong>Lan tỏa niềm cảm hứng:</strong><span> Chụp ảnh chậu cây mới của bạn và chia sẻ để cùng nhau sống xanh hơn.</span></div></div>
                         </div>
                     </article>
                 </div>
@@ -1069,7 +1066,7 @@
                         <div class="chips">
                             <article class="chip"><small>Hành động</small><strong>Gom rác</strong><span>Nhựa, giấy, pin & điện tử.</span></article>
                             <article class="chip"><small>Phần thưởng</small><strong>Nhận cây</strong><span>Sen đá, mầm cây & hạt giống.</span></article>
-                            <article class="chip"><small>Theo dõi</small><strong>Dữ liệu</strong><span>Dashboard tác động cá nhân.</span></article>
+                            <article class="chip"><small>Theo dõi</small><strong>Dữ liệu</strong><span>Theo dõi chúng tôi để biết thêm chi tiết.</span></article>
                         </div>
                     </div>
                 </div>
@@ -1107,6 +1104,26 @@
             const form = document.getElementById('mail');
             const email = document.getElementById('email');
             document.getElementById('year').textContent = new Date().getFullYear();
+
+            // Typewriter effect for email placeholder
+            const emailInput = document.getElementById('email');
+            if (emailInput) {
+                const phrases = ['Nhập địa chỉ email của bạn...', 'vidu@gmail.com', 'Nhận bản đồ Trạm Xanh ngay!'];
+                let pi = 0, ci = 0, deleting = false;
+                emailInput.setAttribute('placeholder', '');
+                const typeWriter = () => {
+                    const phrase = phrases[pi];
+                    if (!deleting) {
+                        emailInput.setAttribute('placeholder', phrase.slice(0, ++ci));
+                        if (ci === phrase.length) { deleting = true; setTimeout(typeWriter, 1800); return; }
+                    } else {
+                        emailInput.setAttribute('placeholder', phrase.slice(0, --ci));
+                        if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; setTimeout(typeWriter, 400); return; }
+                    }
+                    setTimeout(typeWriter, deleting ? 45 : 80);
+                };
+                setTimeout(typeWriter, 800);
+            }
 
             const paintTop = (scroll, limit) => {
                 topbar.classList.toggle('scrolled', scroll > 40);
