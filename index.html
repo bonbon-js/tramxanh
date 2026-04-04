@@ -160,6 +160,19 @@
         .hero-grid { display: grid; grid-template-columns: minmax(0,1.05fr) minmax(0,.95fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; }
         .hero h1 { font-size: clamp(3rem, 8vw, 6.2rem); max-width: 12ch; text-wrap: balance; }
         .grad { background: linear-gradient(135deg, var(--green), var(--blue)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        /* Heart Canvas */
+        .hero-heart-wrap {
+            display: flex; align-items: center; justify-content: center;
+            position: relative; width: 100%; height: clamp(360px, 48vw, 540px);
+            border-radius: 36px; overflow: hidden;
+            background: transparent;
+        }
+        #heartCanvas {
+            position: absolute; inset: 0;
+            width: 100% !important; height: 100% !important;
+            border-radius: 36px;
+        }
+        @media (max-width: 1100px) { .hero-heart-wrap { display: none; } }
         .hero p.lead { margin-top: 1.5rem; max-width: 32rem; font-size: 1.125rem; color: var(--muted); line-height: 1.8; }
         .hero-actions { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 2rem; }
         .metrics { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1rem; margin-top: 2.2rem; }
@@ -758,6 +771,11 @@
                         </article>
                     </div>
                 </div>
+
+                <!-- Right: Red Heart Animation -->
+                <div class="hero-heart-wrap" aria-hidden="true">
+                    <canvas id="heartCanvas"></canvas>
+                </div>
             </div>
         </section>
 
@@ -1280,6 +1298,143 @@
             window.addEventListener('load', () => setTimeout(hideLoader, 400));
         }
         // ---- END LOADING SCREEN ----
+
+        // ---- GREEN HEART CANVAS (Adapted from Heart_Animation) ----
+        (function() {
+            var canvas = document.getElementById('heartCanvas');
+            if(!canvas) return;
+            var ctx = canvas.getContext('2d');
+            var width, height;
+            var rand = Math.random;
+
+            var heartPosition = function (rad) {
+                return [Math.pow(Math.sin(rad), 3), -(15 * Math.cos(rad) - 5 * Math.cos(2 * rad) - 2 * Math.cos(3 * rad) - Math.cos(4 * rad))];
+            };
+            var scaleAndTranslate = function (pos, sx, sy, dx, dy) {
+                return [dx + pos[0] * sx, dy + pos[1] * sy];
+            };
+
+            var e = [];
+            var targetPoints = [];
+            var pointsOrigin = [];
+            var heartPointsCount = 0;
+            var traceCount = 35; // optimal length for transparent trails
+
+            function initCanvas() {
+                var rect = canvas.parentElement.getBoundingClientRect();
+                width = canvas.width = rect.width || 480;
+                height = canvas.height = rect.height || 480;
+                
+                // Adjust scale for smaller hero container
+                var scaleFunc = Math.min(width, height) / 450; 
+                var s1 = 210 * scaleFunc;
+                var s2 = 13 * scaleFunc;
+                var s3 = 150 * scaleFunc;
+                var s4 = 9 * scaleFunc;
+                var s5 = 90 * scaleFunc;
+                var s6 = 5 * scaleFunc;
+
+                pointsOrigin = [];
+                for (var i = 0; i < Math.PI * 2; i += 0.1) pointsOrigin.push(scaleAndTranslate(heartPosition(i), s1, s2, 0, 0));
+                for (var i = 0; i < Math.PI * 2; i += 0.1) pointsOrigin.push(scaleAndTranslate(heartPosition(i), s3, s4, 0, 0));
+                for (var i = 0; i < Math.PI * 2; i += 0.1) pointsOrigin.push(scaleAndTranslate(heartPosition(i), s5, s6, 0, 0));
+                heartPointsCount = pointsOrigin.length;
+
+                e = [];
+                for (var i = 0; i < heartPointsCount; i++) {
+                    var x = rand() * width;
+                    var y = rand() * height;
+                    e[i] = {
+                        vx: 0,
+                        vy: 0,
+                        R: 2,
+                        speed: rand() + 5,
+                        q: ~~(rand() * heartPointsCount),
+                        D: 2 * (i % 2) - 1,
+                        force: 0.2 * rand() + 0.7,
+                        // Update to green hues (140-165)
+                        hue: ~~(25 * rand() + 140),
+                        sat: ~~(30 * rand() + 60),
+                        lit: ~~(25 * rand() + 30),
+                        trace: []
+                    };
+                    for (var k = 0; k < traceCount; k++) e[i].trace[k] = { x: x, y: y };
+                }
+            }
+
+            var pulse = function (kx, ky) {
+                targetPoints = [];
+                for (var i = 0; i < pointsOrigin.length; i++) {
+                    targetPoints[i] = [];
+                    targetPoints[i][0] = kx * pointsOrigin[i][0] + width / 2;
+                    targetPoints[i][1] = ky * pointsOrigin[i][1] + height / 2;
+                }
+            };
+
+            var config = {
+                traceK: 0.4,
+                timeDelta: 0.01
+            };
+
+            var time = 0;
+            var loop = function () {
+                var n = -Math.cos(time);
+                pulse((1 + n) * .5, (1 + n) * .5);
+                time += ((Math.sin(time)) < 0 ? 9 : (n > 0.8) ? .2 : 1) * config.timeDelta;
+                
+                // Clear canvas completely to show background underneath
+                ctx.clearRect(0, 0, width, height);
+                
+                for (var i = e.length; i--;) {
+                    var u = e[i];
+                    var q = targetPoints[u.q];
+                    var dx = u.trace[0].x - q[0];
+                    var dy = u.trace[0].y - q[1];
+                    var length = Math.sqrt(dx * dx + dy * dy);
+                    if (10 > length) {
+                        if (0.95 < rand()) {
+                            u.q = ~~(rand() * heartPointsCount);
+                        }
+                        else {
+                            if (0.99 < rand()) {
+                                u.D *= -1;
+                            }
+                            u.q += u.D;
+                            u.q %= heartPointsCount;
+                            if (0 > u.q) {
+                                u.q += heartPointsCount;
+                            }
+                        }
+                    }
+                    u.vx += -dx / length * u.speed;
+                    u.vy += -dy / length * u.speed;
+                    u.trace[0].x += u.vx;
+                    u.trace[0].y += u.vy;
+                    u.vx *= u.force;
+                    u.vy *= u.force;
+                    for (var k = 0; k < u.trace.length - 1;) {
+                        var T = u.trace[k];
+                        var N = u.trace[++k];
+                        N.x -= config.traceK * (N.x - T.x);
+                        N.y -= config.traceK * (N.y - T.y);
+                    }
+                    
+                    // Draw trace with fading alpha over transparent background
+                    for (var k = 0; k < u.trace.length; k++) {
+                        var alpha = 1 - (k / u.trace.length); // newest trace point is fully visible
+                        ctx.fillStyle = "hsla(" + u.hue + "," + u.sat + "%," + u.lit + "%," + (alpha * 0.7) + ")";
+                        ctx.fillRect(u.trace[k].x, u.trace[k].y, 1.2, 1.2);
+                    }
+                }
+                window.requestAnimationFrame(loop);
+            };
+
+            initCanvas();
+            var ro = new ResizeObserver(initCanvas);
+            ro.observe(canvas.parentElement);
+            loop();
+        })();
+        // ---- END GREEN HEART CANVAS ----
     </script>
 </body>
 </html>
