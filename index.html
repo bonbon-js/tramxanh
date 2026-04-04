@@ -8,7 +8,7 @@
     <script>document.documentElement.classList.add('js');</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Bodoni+Moda:opsz,wght@6..96,600;6..96,700;6..96,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Bodoni+Moda:opsz,wght@6..96,600;6..96,700;6..96,800&family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
         :root {
@@ -91,10 +91,10 @@
         .eyebrow { display: inline-flex; align-items: center; gap: .65rem; color: var(--green); font-size: .82rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
         .eyebrow::before { content: ""; width: 38px; height: 1px; background: linear-gradient(90deg, var(--green), transparent); }
         h1, h2, h3, .display { 
-            font-family: 'Bodoni Moda', serif; 
+            font-family: 'Montserrat', sans-serif; 
             line-height: 1.1; 
             letter-spacing: -0.02em; 
-            font-weight: 800;
+            font-weight: 700;
             color: var(--text); /* Heading màu thẫm nhất */
         }
         h1 { font-size: clamp(3.2rem, 8vw, 6.4rem); }
@@ -125,7 +125,7 @@
         }
         nav { position: relative; }
         .menu {
-            display: flex; align-items: center; gap: .3rem; list-style: none;
+            display: flex; align-items: center; justify-content: space-between; gap: 1rem; list-style: none;
             padding: .35rem; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.5);
         }
         .menu a {
@@ -134,7 +134,7 @@
             transition: color .3s ease, background .3s ease, transform .3s ease;
         }
         .menu a::after {
-            content: ""; position: absolute; left: 18px; right: 18px; bottom: 10px; height: 2px;
+            content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px;
             border-radius: 999px; background: linear-gradient(90deg, var(--green), var(--blue));
             transform: scaleX(0); transition: transform .3s ease;
         }
@@ -273,7 +273,7 @@
             border-radius: 22px;
             border: 1px solid rgba(51,98,86,.1);
         }
-        .stat { font-size: clamp(3rem, 7vw, 4.8rem); line-height: .92; font-weight: 800; letter-spacing: -.07em; }
+        .stat { font-family: 'Montserrat', sans-serif; font-size: clamp(3rem, 7vw, 4.8rem); line-height: .92; font-weight: 700; letter-spacing: -.07em; }
         .mini { padding: .9rem 1rem; border-radius: 18px; border: 1px solid rgba(51,98,86,.1); background: rgba(255,255,255,.7); }
         .mini strong { display: block; margin-bottom: .12rem; font-size: .96rem; }
         .sources { margin-top: auto; display: flex; flex-wrap: wrap; gap: .75rem; }
@@ -399,11 +399,11 @@
             transform: translateY(0);
             transition-delay: 0.3s;
         }
-        .g-card h4 { font-family: 'Bodoni Moda', serif; font-size: clamp(1.8rem, 3vw, 2.8rem); margin-bottom: 0.8rem; line-height: 1.1; }
+        .g-card h4 { font-family: 'Montserrat', sans-serif; font-size: clamp(1.8rem, 3vw, 2.8rem); margin-bottom: 0.8rem; line-height: 1.1; font-weight: 700; }
         .g-card p { font-size: 1.05rem; color: rgba(255,255,255,0.85); max-width: 45ch; line-height: 1.6; }
         .g-stat { margin-top: 1.5rem; display: flex; gap: 2rem; }
         .g-stat div { display: flex; flex-direction: column; }
-        .g-stat strong { font-size: 1.8rem; color: var(--gold); }
+        .g-stat strong { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; color: var(--gold); font-weight: 700; }
         .g-stat span { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.7; }
         
         @media (max-width: 900px) {
@@ -452,12 +452,12 @@
             text-shadow: 0 5px 10px #0004;
         }
         
-        .carousel .list .item .author { font-weight: bold; letter-spacing: 10px; color: var(--green); text-transform: uppercase; }
+        .carousel .list .item .author { font-family: 'Montserrat', sans-serif; font-weight: 700; letter-spacing: 10px; color: var(--green); text-transform: uppercase; }
         .carousel .list .item .title,
         .carousel .list .item .topic {
-            font-family: 'Bodoni Moda', serif;
+            font-family: 'Montserrat', sans-serif;
             font-size: clamp(3rem, 6vw, 5em);
-            font-weight: bold;
+            font-weight: 700;
             line-height: 1.1em;
         }
         .carousel .list .item .topic { color: var(--green); }
@@ -473,7 +473,7 @@
         .thumbnail {
             position: absolute;
             bottom: 50px;
-            left: 50%;
+            left: 62%;
             width: max-content;
             z-index: 100;
             display: flex;
@@ -506,7 +506,7 @@
             z-index: 1;
         }
         .thumbnail .item::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,0,0,0.8), transparent 60%); }
-        .thumbnail .item .title { font-weight: bold; position: relative; z-index: 2; font-size: 0.9rem; line-height: 1.2; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+        .thumbnail .item .title { font-family: 'Montserrat', sans-serif; font-weight: 700; position: relative; z-index: 2; font-size: 0.9rem; line-height: 1.2; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
         .thumbnail .item .description { font-weight: 300; position: relative; z-index: 2; font-size: 0.75rem; }
         
         /* ARROWS */
@@ -554,28 +554,28 @@
         .carousel .list .item:nth-child(1) .content .des { animation-delay: 1.6s; }
         
         /* EFFECT NEXT CLICK */
-        .carousel.next .list .item:nth-child(1) img { width: 150px; height: 220px; position: absolute; bottom: 50px; left: 50%; border-radius: 30px; animation: showImage .5s linear 1 forwards; }
+        .carousel.next .list .item:nth-child(1) img { width: 150px; height: 220px; position: absolute; bottom: 50px; left: 50%; border-radius: 30px; animation: showImage 0.8s ease-in-out 1 forwards; }
         @keyframes showImage { to { bottom: 0; left: 0; width: 100%; height: 100%; border-radius: 0; } }
-        .carousel.next .thumbnail .item:nth-last-child(1) { overflow: hidden; animation: showThumbnail .5s linear 1 forwards; }
+        .carousel.next .thumbnail .item:nth-last-child(1) { overflow: hidden; animation: showThumbnail 0.8s ease-in-out 1 forwards; }
         @keyframes showThumbnail { from { width: 0; opacity: 0; } }
-        .carousel.next .thumbnail { animation: effectNext .5s linear 1 forwards; }
+        .carousel.next .thumbnail { animation: effectNext 0.8s ease-in-out 1 forwards; }
         @keyframes effectNext { from { transform: translateX(150px); } }
         
         /* TIMEBAR */
         .time { position: absolute; z-index: 100; width: 0%; height: 4px; background-color: var(--green); left: 0; top: 0; }
-        .carousel.next .time, .carousel.prev .time { animation: runningTime 3s linear 1 forwards; }
+        .carousel.next .time, .carousel.prev .time { animation: runningTime 3s ease-in-out 1 forwards; }
         @keyframes runningTime { from { width: 100%; } to { width: 0; } }
         
         /* EFFECT PREV CLICK */
         .carousel.prev .list .item:nth-child(2) { z-index: 2; }
-        .carousel.prev .list .item:nth-child(2) img { position: absolute; bottom: 0; left: 0; animation: outFrame 0.5s linear 1 forwards; }
+        .carousel.prev .list .item:nth-child(2) img { position: absolute; bottom: 0; left: 0; animation: outFrame 0.8s ease-in-out 1 forwards; }
         @keyframes outFrame { to { width: 150px; height: 220px; bottom: 50px; left: 50%; border-radius: 20px; } }
-        .carousel.prev .thumbnail .item:nth-child(1) { overflow: hidden; opacity: 0; animation: showThumbnail .5s linear 1 forwards; }
+        .carousel.prev .thumbnail .item:nth-child(1) { overflow: hidden; opacity: 0; animation: showThumbnail 0.8s ease-in-out 1 forwards; }
         .carousel.prev .list .item:nth-child(2) .content .author,
         .carousel.prev .list .item:nth-child(2) .content .title,
         .carousel.prev .list .item:nth-child(2) .content .topic,
         .carousel.prev .list .item:nth-child(2) .content .des {
-            animation: contentOut 1.5s linear 1 forwards;
+            animation: contentOut 1.5s ease-in-out 1 forwards;
         }
         @keyframes contentOut { to { transform: translateY(-150px); filter: blur(20px); opacity: 0; } }
         
@@ -599,18 +599,23 @@
             .burger { display: grid; }
             .head-actions { display: none; }
             .menu {
-                position: absolute; top: calc(100% + .8rem); right: 0; width: min(88vw, 19rem);
-                padding: .7rem; flex-direction: column; align-items: stretch; border-radius: 24px; background: rgba(8,17,28,.95);
-                opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-10px); transition: opacity .3s ease, transform .3s ease, visibility .3s ease;
+                position: fixed; top: calc(100% + .8rem); right: .75rem; left: auto; width: min(85vw, 18rem);
+                padding: .5rem; flex-direction: column; align-items: stretch; gap: .5rem; border-radius: 20px; background: rgba(8,17,28,.96); backdrop-filter: blur(8px);
+                opacity: 0; visibility: hidden; pointer-events: none; transform: scaleY(0); transform-origin: top right; transition: opacity .3s ease, transform .3s ease, visibility .3s ease;
+                box-shadow: 0 12px 32px rgba(0,0,0,.24);
             }
-            header.open .menu { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); }
-            .menu a { justify-content: flex-start; }
+            header.open .menu { opacity: 1; visibility: visible; pointer-events: auto; transform: scaleY(1); }
+            .menu a { justify-content: flex-start; padding: .9rem 1.1rem; font-size: .95rem; border-radius: 14px; }
+            .menu a::after { display: none; }
+            .menu a:hover, .menu a.active { background: rgba(255,255,255,.12); color: var(--green); }
             .intro { flex-direction: column; align-items: flex-start; }
             .cards3, .metrics, .dash, .chips { grid-template-columns: 1fr; }
         }
         @media (max-width: 640px) {
             header { padding-left: .75rem; padding-right: .75rem; }
-            .navbox { width: 100%; padding: .7rem .8rem; }
+            .navbox { width: 100%; padding: .65rem .75rem; gap: .5rem; }
+            .brand { font-size: .85rem; gap: .45rem; }
+            .burger { width: 44px; height: 44px; }
             .hero { padding-top: 7.7rem; }
             .hero h1 { font-size: clamp(3rem, 13vw, 4.2rem); }
             .stage { min-height: 30rem; padding: 1.2rem; }
@@ -719,7 +724,6 @@
                 </ul>
             </nav>
             <div class="head-actions">
-                <a class="btn secondary magnetic" href="#evidence"><i class="ph-bold ph-chart-bar"></i>Xem số liệu</a>
                 <a class="btn primary magnetic" href="#cta"><i class="ph-bold ph-arrow-up-right"></i>Hành động ngay</a>
             </div>
             <button class="burger" id="burger" aria-label="Mở menu" aria-expanded="false" aria-controls="menu"><i class="ph-bold ph-list"></i></button>
@@ -771,7 +775,7 @@
 
                 <div class="gallery" data-r>
                     <div class="g-card">
-                        <img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1200&q=80" alt="Bụi mịn đô thị">
+                        <img src="images/buimin.jpg" alt="Bụi mịn đô thị">
                         <div class="g-content">
                             <h4>Bụi mịn PM2.5</h4>
                             <p>Xuyên qua mọi lớp khẩu trang thông thường, đi thẳng vào máu và tàn phá các cơ quan nội tạng.</p>
@@ -782,7 +786,7 @@
                         </div>
                     </div>
                     <div class="g-card magnetic">
-                        <img src="https://images.unsplash.com/photo-1611273233597-993472bf5952?auto=format&fit=crop&w=1200&q=80" alt="Khí thải giao thông">
+                        <img src="images/o-nhiem-khong-khi.jpg" alt="Khí thải giao thông">
                         <div class="g-content">
                             <h4>Khí thải Giao thông</h4>
                             <p>Nguồn phát thải Nitơ Dioxit (NO2) lớn nhất tại đô thị, nguyên nhân chính của các bệnh hen suyễn mãn tính.</p>
@@ -793,7 +797,7 @@
                         </div>
                     </div>
                     <div class="g-card magnetic">
-                        <img src="https://images.unsplash.com/photo-1443397646383-162720487997?auto=format&fit=crop&w=1200&q=80" alt="Đốt rác lộ thiên">
+                        <img src="images/o-nhiem-do-dot-rac-sinh-hoat.webp" alt="Đốt rác lộ thiên">
                         <div class="g-content">
                             <h4>Phát thải cục bộ</h4>
                             <p>Đốt rác lộ thiên và phụ phẩm nông nghiệp giải phóng dioxin và carbon đen, làm ô nhiễm tức thì khu dân cư lân cận.</p>
@@ -821,7 +825,7 @@
 
                 <div class="gallery" data-r>
                     <div class="g-card">
-                        <img src="https://images.unsplash.com/photo-1473773508845-188df298d2d1?auto=format&fit=crop&w=1200&q=80" alt="Nước thải công nghiệp">
+                        <img src="images/xu-ly-nuoc-thai.webp" alt="Nước thải công nghiệp">
                         <div class="g-content">
                             <h4>Hóa chất độc hại</h4>
                             <p>80% nước thải thế giới đổ ra sông biển mà chưa qua bất kỳ quy trình xử lý an toàn nào.</p>
@@ -832,7 +836,7 @@
                         </div>
                     </div>
                     <div class="g-card magnetic">
-                        <img src="https://images.unsplash.com/photo-1532601224476-15c79f2f7a51?auto=format&fit=crop&w=1200&q=80" alt="Rác thải nhựa đại dương">
+                        <img src="images/thuc-trang-rac-thai-nhua-o-viet-nam.jpg" alt="Rác thải nhựa đại dương">
                         <div class="g-content">
                             <h4>Vi nhựa & Rác thải</h4>
                             <p>Mỗi phút trôi qua, một xe tải rác nhựa được trút xuống biển. Nhựa cần từ 100 đến 1000 năm để phân hủy.</p>
@@ -843,7 +847,7 @@
                         </div>
                     </div>
                     <div class="g-card magnetic">
-                        <img src="https://images.unsplash.com/photo-1544333323-c2421448b2ad?auto=format&fit=crop&w=1200&q=80" alt="Ô nhiễm sông ngòi">
+                        <img src="images/5-1.webp" alt="Ô nhiễm sông ngòi">
                         <div class="g-content">
                             <h4>Ngành Dệt nhuộm</h4>
                             <p>Cứ mỗi tấn vải, hàng trăm mét khối nước chứa thuốc nhuộm và chất tẩy bị xả bỏ, làm biến đổi pH nguồn nước tự nhiên.</p>
@@ -871,7 +875,7 @@
 
                 <div class="gallery" data-r>
                     <div class="g-card">
-                        <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb773b09?auto=format&fit=crop&w=1200&q=80" alt="Rác thải điện tử">
+                        <img src="images/dt.jpg" alt="Rác thải điện tử">
                         <div class="g-content">
                             <h4>Nhiễm độc từ Rác điện tử</h4>
                             <p>Pin và linh kiện cũ giải phóng Chì, Thủy ngân vào lòng đất, theo mạch nước ngầm đi vào thực phẩm chúng ta ăn hàng ngày.</p>
@@ -882,7 +886,7 @@
                         </div>
                     </div>
                     <div class="g-card magnetic">
-                        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80" alt="Đất nông nghiệp suy thoái">
+                        <img src="images/thuoc-bao-ve-thuc-vat_qzfp.jpg" alt="Đất nông nghiệp suy thoái">
                         <div class="g-content">
                             <h4>Lạm dụng Phân bón</h4>
                             <p>Hóa chất làm đất chai cứng, tiêu diệt vi sinh vật có lợi và khiến mảnh đất không còn khả năng tự hồi phục.</p>
@@ -893,7 +897,7 @@
                         </div>
                     </div>
                     <div class="g-card magnetic">
-                        <img src="https://images.unsplash.com/photo-1592323871239-299f18073bc2?auto=format&fit=crop&w=1200&q=80" alt="Sử dụng kháng sinh trong chăn nuôi">
+                        <img src="images/nuoc-thai-chan-nuoi-o-nhiem.webp" alt="Sử dụng kháng sinh trong chăn nuôi">
                         <div class="g-content">
                             <h4>Kháng sinh dư thừa</h4>
                             <p>Dư lượng kháng sinh từ chất thải chăn nuôi làm biến đổi hệ vi sinh đất, tạo ra các loài vi khuẩn siêu kháng thuốc.</p>
@@ -912,9 +916,9 @@
                 <div class="list" id="spList">
                     <!-- Item 1: Tê giác -->
                     <div class="item">
-                        <img src="images/javan_rhino_extinction_1775136370674.png" alt="Tê giác một sừng">
+                        <img src="images/photo-1-1660446574074145055393.webp" alt="Tê giác một sừng">
                         <div class="content">
-                            <div class="author">TUYỆT CHỦNG TẠI VN</div>
+                            <div class="author">TUYỆT CHỦNG TẠI VIỆT NAM</div>
                             <div class="title">TÊ GIÁC MỘT SỪNG</div>
                             <div class="topic">BÓNG MA TRONG RỪNG</div>
                             <div class="des">
@@ -924,10 +928,10 @@
                     </div>
                     <!-- Item 2: Sao la -->
                     <div class="item">
-                        <img src="images/saola_the_asian_unicorn_1775136412499.png" alt="Sao la">
+                        <img src="images/saola.webp" alt="Sao la">
                         <div class="content">
                             <div class="author">CỰC KỲ NGUY CẤP</div>
-                            <div class="title">SAO LA (SAOLA)</div>
+                            <div class="title">SAO LA</div>
                             <div class="topic">KỲ LÂN TRƯỜNG SƠN</div>
                             <div class="des">
                                 Là một trong những loài thú quý hiếm nhất thế giới. Ngôi nhà của Sao la sâu trong dãy Trường Sơn đang bị tàn phá nặng nề. Hàng trăm ngàn bẫy dây rập rình cướp đi sinh mệnh vốn đang vô cùng mong manh của chúng.
@@ -936,7 +940,7 @@
                     </div>
                     <!-- Item 3: Vích -->
                     <div class="item">
-                        <img src="images/hawksbill_turtle_ocean_plastic_1775136435557.png" alt="Vích">
+                        <img src="images/tai-xuong--1--97973588721263293898055.webp" alt="Vích">
                         <div class="content">
                             <div class="author">NẠN NHÂN CỦA NHỰA</div>
                             <div class="title">RÙA BIỂN VÍCH</div>
@@ -948,7 +952,7 @@
                     </div>
                     <!-- Item 4: Rẽ mỏ thìa -->
                     <div class="item">
-                        <img src="images/spoon_billed_sandpiper_estuary_1775136498502.png" alt="Rẽ mỏ thìa">
+                        <img src="images/7.jpg" alt="Rẽ mỏ thìa">
                         <div class="content">
                             <div class="author">CỰC KỲ NGUY CẤP</div>
                             <div class="title">RẼ MỎ THÌA</div>
@@ -963,19 +967,19 @@
                 <!-- Thumbs (starts from index 1, i.e., Saola -> Vích -> Rẽ Mỏ Thìa -> Tê giác) -->
                 <div class="thumbnail" id="spThumbs">
                     <div class="item">
-                        <img src="images/saola_the_asian_unicorn_1775136412499.png" alt="Sao la">
+                        <img src="images/saola.webp" alt="Sao la">
                         <div class="content"><div class="title">Sao la</div></div>
                     </div>
                     <div class="item">
-                        <img src="images/hawksbill_turtle_ocean_plastic_1775136435557.png" alt="Vích">
+                        <img src="images/tai-xuong--1--97973588721263293898055.webp" alt="Vích">
                         <div class="content"><div class="title">Vích</div></div>
                     </div>
                     <div class="item">
-                        <img src="images/spoon_billed_sandpiper_estuary_1775136498502.png" alt="Rẽ mỏ thìa">
+                        <img src="images/7.jpg" alt="Rẽ mỏ thìa">
                         <div class="content"><div class="title">Rẽ mỏ thìa</div></div>
                     </div>
                     <div class="item">
-                        <img src="images/javan_rhino_extinction_1775136370674.png" alt="Tê giác">
+                        <img src="images/photo-1-1660446574074145055393.webp" alt="Tê giác">
                         <div class="content"><div class="title">Tê giác một sừng</div></div>
                     </div>
                 </div>
@@ -1218,7 +1222,7 @@
             const spThumbs = document.getElementById('spThumbs');
             const timeDom = document.querySelector('.carousel .time');
 
-            let timeRunning = 3000;
+            let timeRunning = 1200;
             let timeAutoNext = 7000;
             let runTimeOut;
             let runNextAuto = setTimeout(() => { if (nextDom) nextDom.click(); }, timeAutoNext);
