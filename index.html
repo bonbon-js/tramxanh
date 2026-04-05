@@ -145,8 +145,67 @@
             display: none; width: 48px; height: 48px; place-items: center;
             border: 1px solid var(--line); border-radius: 50%; background: rgba(255,255,255,.7); color: var(--text); cursor: pointer;
             transition: transform .3s ease, border-color .3s ease, background .3s ease;
+            z-index: 1112;
         }
         .burger:hover { transform: translateY(-2px); border-color: var(--line2); background: rgba(255,255,255,.08); }
+
+        /* === MOBILE FLOATING NAV === */
+        @media (max-width: 900px) {
+            .head-actions { display: none; }
+            .burger { display: grid; }
+            /* Ẩn nav inline trên mobile, chỉ dùng dropdown */
+
+            /* Đầu trang: navbox thu nhỏ vừa phải, mờ, bên phải */
+            .navbox {
+                width: auto;
+                margin-left: auto;
+                margin-right: 0;
+                padding: .5rem .7rem;
+                gap: .5rem;
+                background: rgba(255,255,255,.38);
+                border-color: rgba(51,98,86,.1);
+                backdrop-filter: blur(8px);
+                transition: all .5s cubic-bezier(.22,1,.36,1);
+            }
+            .brand img { height: 52px; }
+
+            /* Khi scroll: thu nhỏ hơn nữa, đậm hơn */
+            header.scrolled .navbox {
+                padding: .4rem .5rem;
+                background: rgba(255,255,255,.85);
+                box-shadow: 0 8px 28px rgba(35,75,66,.18);
+            }
+            header.scrolled .brand img { height: 42px; }
+
+            /* Menu dropdown bên phải */
+            .menu {
+                position: fixed;
+                top: 5rem; right: .75rem; left: auto;
+                width: min(80vw, 16rem);
+                padding: .5rem; flex-direction: column; align-items: stretch; gap: .4rem;
+                border-radius: 20px;
+                background: rgba(10,20,16,.94);
+                backdrop-filter: blur(12px);
+                border: 1px solid rgba(42,163,107,.2);
+                opacity: 0; visibility: hidden; pointer-events: none;
+                transform: scale(.92) translateY(-8px);
+                transform-origin: top right;
+                transition: opacity .3s ease, transform .3s ease, visibility .3s ease;
+                box-shadow: 0 16px 40px rgba(0,0,0,.3);
+                z-index: 1110;
+            }
+            header.open .menu {
+                opacity: 1; visibility: visible; pointer-events: auto;
+                transform: scale(1) translateY(0);
+            }
+            .menu a { justify-content: flex-start; padding: .85rem 1.1rem; font-size: .95rem; border-radius: 14px; color: rgba(255,255,255,.85); }
+            .menu a::after { display: none; }
+            .menu a:hover, .menu a.active { background: rgba(42,163,107,.2); color: #4ade80; }
+            .intro { flex-direction: column; align-items: flex-start; }
+            .intro h2, section h2[data-r] { text-align: left; font-size: clamp(1.8rem, 7vw, 2.6rem); max-width: 100%; }
+            .eyebrow { font-size: .75rem; }
+            .cards3, .metrics, .dash, .chips { grid-template-columns: 1fr; }
+        }
         /* CSS_HERO */
         .hero {
             min-height: 100vh; display: flex; align-items: center; overflow: hidden;
@@ -596,7 +655,7 @@
             .carousel .list .item .content { padding-right: 0; }
             .carousel .list .item .title, .carousel .list .item .topic { font-size: 2rem; }
             .thumbnail { left: 5%; bottom: 80px; }
-            .arrows { right: auto; left: 5%; bottom: 20px; top: auto; }
+            .arrows { display: none; }
         }
 
 
@@ -607,22 +666,6 @@
         @media (max-width: 1100px) {
             .hero-grid, .proofs, .solutions, .ctagrid { grid-template-columns: 1fr; }
             .chips { grid-template-columns: repeat(3, minmax(0,1fr)); min-width: 0; }
-        }
-        @media (max-width: 900px) {
-            .burger { display: grid; }
-            .head-actions { display: none; }
-            .menu {
-                position: fixed; top: calc(100% + .8rem); right: .75rem; left: auto; width: min(85vw, 18rem);
-                padding: .5rem; flex-direction: column; align-items: stretch; gap: .5rem; border-radius: 20px; background: rgba(8,17,28,.96); backdrop-filter: blur(8px);
-                opacity: 0; visibility: hidden; pointer-events: none; transform: scaleY(0); transform-origin: top right; transition: opacity .3s ease, transform .3s ease, visibility .3s ease;
-                box-shadow: 0 12px 32px rgba(0,0,0,.24);
-            }
-            header.open .menu { opacity: 1; visibility: visible; pointer-events: auto; transform: scaleY(1); }
-            .menu a { justify-content: flex-start; padding: .9rem 1.1rem; font-size: .95rem; border-radius: 14px; }
-            .menu a::after { display: none; }
-            .menu a:hover, .menu a.active { background: rgba(255,255,255,.12); color: var(--green); }
-            .intro { flex-direction: column; align-items: flex-start; }
-            .cards3, .metrics, .dash, .chips { grid-template-columns: 1fr; }
         }
         @media (max-width: 640px) {
             header { padding-left: .75rem; padding-right: .75rem; }
@@ -724,21 +767,19 @@
 
     <header id="topbar">
         <div class="navbox">
-            <a class="brand" href="#hero"><img src="images/logo.png" alt="TRẠM XANH"></a>
-            <nav aria-label="Điều hướng chính">
-                <ul class="menu" id="menu">
-                    <li><a class="active" href="#hero">Trang chủ</a></li>
-                    <li><a href="#air">Không khí</a></li>
-                    <li><a href="#water">Nguồn nước</a></li>
-                    <li><a href="#soil">Mảnh đất</a></li>
-                    <li><a href="#species">Tuyệt chủng</a></li>
-                    <li><a href="#cta">Cách đổi quà</a></li>
-                </ul>
-            </nav>
+            <a class="brand" href="#hero" id="brandLogo"><img src="images/logo.png" alt="TRẠM XANH"></a>
+            <ul class="menu" id="menu" role="list">
+                <li><a class="active" href="#hero">Trang chủ</a></li>
+                <li><a href="#air">Không khí</a></li>
+                <li><a href="#water">Nguồn nước</a></li>
+                <li><a href="#soil">Mảnh đất</a></li>
+                <li><a href="#species">Tuyệt chủng</a></li>
+                <li><a href="#cta">Cách đổi quà</a></li>
+            </ul>
             <div class="head-actions">
                 <a class="btn primary magnetic" href="#cta"><i class="ph-bold ph-arrow-up-right"></i>Hành động ngay</a>
             </div>
-            <button class="burger" id="burger" aria-label="Mở menu" aria-expanded="false" aria-controls="menu"><i class="ph-bold ph-list"></i></button>
+            <button class="burger" type="button" id="burger" aria-label="Mở menu" aria-expanded="false" aria-controls="menu"><i class="ph-bold ph-list"></i></button>
         </div>
     </header>
 
@@ -1097,6 +1138,7 @@
             const bar = document.getElementById('progress');
             const cursor = document.getElementById('cursor');
             const topbar = document.getElementById('topbar');
+            const brandLogo = document.getElementById('brandLogo');
             const burger = document.getElementById('burger');
             const menuLinks = [...document.querySelectorAll('.menu a')];
             const stage = document.getElementById('stage');
@@ -1131,16 +1173,45 @@
                 bar.style.width = (max > 0 ? Math.min(scroll / max * 100, 100) : 0) + '%';
             };
 
-            const onScroll = () => paintTop(window.scrollY, document.documentElement.scrollHeight - window.innerHeight);
+            const closeMenu = () => { topbar.classList.remove('open'); if (burger) burger.setAttribute('aria-expanded', 'false'); };
+            const toggleMenu = () => {
+                const open = topbar.classList.toggle('open');
+                if (burger) burger.setAttribute('aria-expanded', String(open));
+            };
+
+            let lastScroll = 0;
+            const onScroll = () => {
+                const s = window.scrollY;
+                if (Math.abs(s - lastScroll) > 5) closeMenu();
+                lastScroll = s;
+                paintTop(s, document.documentElement.scrollHeight - window.innerHeight);
+            };
             onScroll();
             window.addEventListener('scroll', onScroll, { passive: true });
 
-            const closeMenu = () => { topbar.classList.remove('open'); burger.setAttribute('aria-expanded', 'false'); };
-            burger.addEventListener('click', () => {
-                const open = topbar.classList.toggle('open');
-                burger.setAttribute('aria-expanded', String(open));
+            // Burger button toggle
+            if (burger) {
+                burger.addEventListener('click', e => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleMenu();
+                });
+            }
+
+            // Logo: trên mobile chỉ toggle menu, không navigate
+            if (brandLogo) {
+                brandLogo.addEventListener('click', e => {
+                    if (window.innerWidth <= 900) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        toggleMenu();
+                    }
+                });
+            }
+
+            document.addEventListener('click', e => {
+                if (!topbar.contains(e.target)) closeMenu();
             });
-            document.addEventListener('click', e => { if (!topbar.contains(e.target)) closeMenu(); });
 
             document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
                 const target = document.querySelector(a.getAttribute('href'));
