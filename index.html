@@ -107,12 +107,12 @@
         /* CSS_NAV */
         header {
             position: fixed; top: 0; left: 0; width: 100%; z-index: 1100;
-            padding: 1rem; transition: padding .35s ease;
+            padding: .75rem 0; transition: padding .35s ease;
         }
-        header.scrolled { padding-top: .7rem; padding-bottom: .7rem; }
+        header.scrolled { padding-top: .5rem; padding-bottom: .5rem; }
         .navbox {
-            width: min(100%, 1240px); margin: 0 auto; padding: .8rem 1rem;
-            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+            width: min(100%, 1240px); margin: 0 auto; padding: .6rem .85rem;
+            display: flex; align-items: center; justify-content: space-between; gap: .85rem;
             border-radius: 999px; background: rgba(255,255,255,.66); backdrop-filter: blur(10px);
             transition: background .35s ease, border-color .35s ease, box-shadow .35s ease;
             border: 1px solid transparent;
@@ -122,15 +122,15 @@
         }
         .brand { display: inline-flex; align-items: center; gap: .65rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
         .brand::before { display: none; }
-        .brand img { height: 95px; width: auto; }
+        .brand img { height: 82px; width: auto; }
         nav { position: relative; }
         .menu {
-            display: flex; align-items: center; justify-content: space-between; gap: 1rem; list-style: none;
-            padding: .35rem; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.5);
+            display: flex; align-items: center; justify-content: space-between; gap: .85rem; list-style: none;
+            padding: .3rem; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.5);
         }
         .menu a {
             position: relative; display: inline-flex; align-items: center; justify-content: center;
-            padding: .8rem 1rem; border-radius: 999px; color: var(--muted); font-size: .92rem; font-weight: 600;
+            padding: .65rem .85rem; border-radius: 999px; color: var(--muted); font-size: .92rem; font-weight: 600;
             transition: color .3s ease, background .3s ease, transform .3s ease;
         }
         .menu a::after {
@@ -680,6 +680,7 @@
             .note { position: relative; right: auto; bottom: auto; margin-top: 15.5rem; max-width: none; }
             form.mail { grid-template-columns: 1fr; border-radius: 28px; }
             .foot { flex-direction: column; align-items: flex-start; }
+            .chips { grid-template-columns: 1fr; min-width: 0; }
             .cursor { display: none; }
         }
         @media (prefers-reduced-motion: reduce) {
@@ -861,7 +862,7 @@
                             <p>Đốt rác lộ thiên và phụ phẩm nông nghiệp giải phóng dioxin và carbon đen, làm ô nhiễm tức thì khu dân cư lân cận.</p>
                             <div class="g-stat">
                                 <div><strong>25%</strong><span>Bụi mịn vùng ven</span></div>
-                                <div><strong>C</strong><span>Carbon đen</span></div>
+                                <div><strong>BC</strong><span>Carbon đen</span></div>
                             </div>
                         </div>
                     </div>
@@ -1113,10 +1114,9 @@
                 </div>
 
                 <footer class="foot">
-                    <p>&copy; <span id="year"></span> TRẠM XANH. Chạm vào thiên nhiên, thay đổi tương lai.</p>
+                    <p>&copy; <span id="year"></span> TRẠM XANH.</p>
                     <div class="socials">
                         <a href="#hero" aria-label="Lên đầu trang"><i class="ph-bold ph-arrow-up"></i></a>
-                        <a href="#evidence" aria-label="Đi tới phần dẫn chứng"><i class="ph-bold ph-chart-pie-slice"></i></a>
                         <a href="#cta" aria-label="Đi tới phần đăng ký"><i class="ph-bold ph-envelope-simple"></i></a>
                     </div>
                 </footer>
